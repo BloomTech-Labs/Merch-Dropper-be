@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
         userID: user.id,
         domain_name: store.domain_name
       };
-      await Models.Stores.insert(storeWithEmail);
+      Models.Stores.insert(storeWithEmail);
       res.status(201).json({
         message: "You have successfully added a Store!",
         storeWithEmail

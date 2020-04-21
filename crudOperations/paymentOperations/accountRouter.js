@@ -7,49 +7,54 @@ const stripe = require('stripe')('sk_test_RRgLrJ77g7l5APlwZ9Tkna6g00NLWWukJR');
 
 router.post('/accounts', async (req, res) => {
     
-    let userCode = req.body.user_code;
+    const userCode = req.body.user_code;
+    const email = req.body.email;
     
-    try{
-        const response = await stripe.oauth.token({
-            grant_type: 'authorization_code',
-            code: userCode,
-          });
-        
-        if(response){
-            res.status(201).json({ message: "Account Number Aqcuired!", response });
-        }
-        else{
-            res.status(500).json({ error: "There was an issue connecting your stripe account", response})
-        }
+    console.log(userCode)
 
+    const response = await stripe.oauth.token({
+        grant_type: 'authorization_code',
+        code: userCode,
+        });
+    console.log(response)
+    console.log(response.stripe_user_id)
+    console.log(email)
+    let user = await Models.Users.findByEmail(email)
+    user.stripe_account = response.stripe_user_id;
+    console.log(user)
+    console.log(user.username)
+    const updatedUser = await Models.Users.updateByUsername(user.username, user);
+    console.log(updatedUser)
+    
+    if(response){
+        res.status(201).json({ message: "Account Number Aqcuired!", response });
     }
-    catch(error){
-        res.status(500).json({ error: "Stripe API error", error})
+    else{
+        res.status(500).json({ error: "There was an issue connecting your stripe account", response})
     }
 
 });
 
+router.get('/:email', async (req,res) => {
 
-router.post('/post', async (req, res) => {
+    const {email} = req.params;
 
-    const stripeAcc = req.body.account_num;
-    const id = req.body.id;
+    console.log(email)
     try{
-        const user = await Models.Users.insertStripeAccount(id, stripeAcc);
-        if(user)
-        {
-            res.status(201).json({ message: "Sucessfully added the stripe account to DB =", user });
+        const user = await Models.Users.findByEmail(email);
+        console.log(user)
+        if(user){
+            res.status(201).json({ user });
         }
     }
     catch(error){
+
         res.status(500).json({
             error,
-            message: "Unable to find this user"
+            message: "Unable to retrieve stripe info"
           });
-
     }
 
-
-});
+})
 
 module.exports = router;

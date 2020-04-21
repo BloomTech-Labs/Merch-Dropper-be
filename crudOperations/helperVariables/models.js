@@ -158,17 +158,6 @@ class Model {
       .del();
   }
 
-  insertStripeAccount(id, accountNum) {
- 
-      return db(this.tableName)
-        .where("id", id)
-        .insert({stripe_account: accountNum})
-        .then(ids => {
-          const [id] = ids;
-          return this.findById(id);
-        });
-  
-  }
 
 }
 
