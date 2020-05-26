@@ -397,7 +397,10 @@ In order for the app to function correctly, the user must set up their own envir
 -   PORT=5032 or pick your favorite ;) defaults to 4000 in Development
 -   NODE_ENV=development --- set to "development" until ready for "production"
 -   JWT_SECRET=[any randomly generated or complex string will work here]
-
+- TEST=OnRlc3RfZUIza2JJTThFRG5OdHEwenBSSU5fZw==
+- STRIPE_SECRET_TEST_KEY=[see in stripe account]
+- CONNECTED_STRIPE_ACCOUNT_ID_TEST=[see in stripe account]
+- STRIPE_PUBLISHABLE_KEY_TEST=[see in stripe account]
 ## Contributing
 
 -   When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
