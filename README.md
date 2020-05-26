@@ -392,7 +392,7 @@ To get the server running locally:
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
--   ### create a .env file that includes the following:
+-   ### create a config.env file in the config folder that includes the following:
 
 -   PORT=5032 or pick your favorite ;) defaults to 4000 in Development
 -   NODE_ENV=development --- set to "development" until ready for "production"
