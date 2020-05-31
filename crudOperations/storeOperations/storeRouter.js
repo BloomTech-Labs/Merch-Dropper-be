@@ -19,17 +19,20 @@ router.post("/", async (req, res) => {
     } else {
       Models.Users.findByEmail(email)
         .then((user) => {
-          console.log(user)
-          const storeWithEmail = {
-            store_name: store.store_name,
-            userID: store.id,
-            domain_name: store.domain_name,
-          };
-          Models.Stores.insert(storeWithEmail);
-          res.status(201).json({
-            message: "You have successfully added a Store!",
-            storeWithEmail,
-          });
+          if (user) {
+            const storeWithEmail = {
+              store_name: store.store_name,
+              userID: user.id,
+              domain_name: store.domain_name,
+            };
+            Models.Stores.insert(storeWithEmail);
+            res.status(201).json({
+              message: "You have successfully added a Store!",
+              storeWithEmail,
+            });
+          } else {
+            res.status(404).json({ message: "user not found" });
+          }
         })
         .catch((error) => {
           res.status(400).json({ error: error.message });
