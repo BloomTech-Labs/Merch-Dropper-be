@@ -8,13 +8,16 @@ const Models = require("../helperVariables/models");
 // @route    POST /api/quotes
 // @access   Private
 router.post("/", async (req, res) => {
+  console.log('made it')
   try {
     let data = req.body;
+    console.log('quote data', data)
     if (data) {
+      console.log(data, "data")
       const spResponse = await Quotes.quoteMaker(data.spInfo);
       if (spResponse) {
         let quote = {
-          userID: data.quoteInfo.userID,
+          userID: data.quoteInfo.userID, // not relevant until/if there are buyer users
           storeID: data.quoteInfo.storeID,
           total: spResponse.total,
           subtotal: spResponse.subtotal,
@@ -33,14 +36,13 @@ router.post("/", async (req, res) => {
           spResponse
         });
       }
-    } //figure out how to test wrong or missing info here, its tricky with the api call
+    // } //figure out how to test wrong or missing info here, its tricky with the api call
     // else {
     //   res.status(400).json({ message: "please include all required content" });
-    // }
-  } catch (error) {
+    }
+  }catch (error) {
     res.status(500).json({
-      error,
-      message: "Unable to add this quote, its not you.. its me"
+      error
     });
   }
 });

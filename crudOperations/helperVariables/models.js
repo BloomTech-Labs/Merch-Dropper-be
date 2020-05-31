@@ -180,7 +180,7 @@ const Stores = new Model("stores");
 const Designs = new Model("designs");
 const Quotes = new Model("quotes");
 const Orders = new Model("orders");
-const Products = new Model("products");
+const Products = new Model("newproducts");
 
 // POST AND PUT FUNCTIONS HERE
 

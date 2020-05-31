@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
           console.log(user)
           const storeWithEmail = {
             store_name: store.store_name,
-            userID: user.id,
+            userID: store.id,
             domain_name: store.domain_name,
           };
           Models.Stores.insert(storeWithEmail);

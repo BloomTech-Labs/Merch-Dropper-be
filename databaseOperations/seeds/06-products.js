@@ -2,6 +2,9 @@ exports.seed = function(knex) {
   return knex("products").insert([
     {
       productName: "Test Product - Store One",
+      color: "white",
+      size: "med",
+      type: "dtg",
       designId: "1",
       fullSizeURL:
         "https://res.cloudinary.com/dze74ofbf/image/upload/v1581453585/wsjikfpellbybgzbymy2.jpg",
@@ -14,6 +17,9 @@ exports.seed = function(knex) {
     },
     {
       productName: "Test Product - Store 2",
+      color: "black",
+      size: "med",
+      type: "dtg",
       designId: "1",
       fullSizeURL:
         "https://res.cloudinary.com/dze74ofbf/image/upload/v1581453585/wsjikfpellbybgzbymy2.jpg",
