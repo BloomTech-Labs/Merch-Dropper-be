@@ -7,6 +7,9 @@ exports.up = function(knex) {
     products.string("description", 500).defaultTo("None");
     products.decimal("price").defaultTo(0);
     products.string('designId').notNullable();
+    products.string('color').notNullable();
+    products.string('size').notNullable();
+    products.string('type').notNullable();
     products
       .integer("storeID")
       .notNullable()

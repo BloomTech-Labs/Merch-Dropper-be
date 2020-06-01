@@ -17,22 +17,27 @@ router.post("/", async (req, res) => {
     if (!store.store_name || !store.email) {
       res.status(400).json({ message: "please include all required content" });
     } else {
-      const user = await Models.Users.findByEmail(email);
-      console.log(user);
-      const storeWithEmail = {
-        store_name: store.store_name,
-        userID: user.id,
-        domain_name: store.domain_name,
-      };
-      Models.Stores.insert(storeWithEmail);
-      res.status(201).json({
-        message: "You have successfully added a Store!",
-        storeWithEmail,
-      });
+      Models.Users.findByEmail(email)
+        .then((user) => {
+          console.log(user)
+          const storeWithEmail = {
+            store_name: store.store_name,
+            userID: store.id,
+            domain_name: store.domain_name,
+          };
+          Models.Stores.insert(storeWithEmail);
+          res.status(201).json({
+            message: "You have successfully added a Store!",
+            storeWithEmail,
+          });
+        })
+        .catch((error) => {
+          res.status(400).json({ error: error.message });
+        });
     }
   } catch (error) {
     res.status(500).json({
-      error,
+      [error]: error.message,
       message: "Unable to add this store, its not you.. its me",
     });
   }
