@@ -55,9 +55,11 @@ router.post('/create-payment-intent', async (req, res) => {
     let sellerAcct;
     Models.Stores.findByDomainName(domain_name)
     .then(store => {
+        console.log('store runs')
         const { userID } = store;
         Models.Users.findById(userID)
         .then( async seller => {
+          console.log('seller runs')
             const { stripe_account } = seller;
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
             let application_fee = 0;
