@@ -8,6 +8,7 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST_KEY); //Change S
 
 
 router.post('/', async (req, res) => {
+  // We should remove this post 
     const Data = {
         source: req.body.token.id,
         amount: Number(req.body.amount),
