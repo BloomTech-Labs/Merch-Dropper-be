@@ -12,17 +12,17 @@ const Models = require("../helperVariables/models");
 router.post("/", async (req, res) => {
   try {
     let store = req.body;
-    const email = req.body.email;
-
-    if (!store.store_name || !store.email) {
+    const id = req.body.id;
+    console.log(req.body, "body")
+    if (!store.store_name || !store.id) {
       res.status(400).json({ message: "please include all required content" });
     } else {
-      Models.Users.findByEmail(email)
+      Models.Users.findById(id)
         .then((user) => {
-          console.log(user)
+          console.log(user, "user")
           const storeWithEmail = {
             store_name: store.store_name,
-            userID: store.id,
+            userID: user.id,
             domain_name: store.domain_name,
           };
           Models.Stores.insert(storeWithEmail);
