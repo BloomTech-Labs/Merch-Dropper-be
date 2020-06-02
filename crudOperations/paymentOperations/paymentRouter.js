@@ -56,9 +56,10 @@ router.post('/create-payment-intent', async (req, res) => {
    
     // The helpers below grab the sellers stripe account to assign to acctStripe
     let sellerAcct;
+    console.log(domain_name, 'in BE')
     Models.Stores.findByDomainName(domain_name)
     .then(store => {
-        console.log('store runs')
+        console.log('store runs', store)
         const { userID } = store;
         Models.Users.findById(userID)
         .then( async seller => {
