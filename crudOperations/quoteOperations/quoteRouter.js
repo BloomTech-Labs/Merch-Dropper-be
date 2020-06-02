@@ -15,7 +15,7 @@ router.post("/", async (req, res) => {
     if (data) {
       console.log(data, "data")
       const spResponse = await Quotes.quoteMaker(data.spInfo);
-      console.log(spResponse, "response SP")
+      console.log(spResponse.data.orderIssues, "response SP")
       if (spResponse) {
         let quote = {
           userID: data.quoteInfo.userID, // not relevant until/if there are buyer users

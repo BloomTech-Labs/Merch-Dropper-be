@@ -46,10 +46,12 @@ router.post('/', async (req, res) => {
 })
 
 router.post('/create-payment-intent', async (req, res) => {
+  
     const data = req.body;
+    console.log('data to payment intent', data)
     const amount = data.amount;
     const { domain_name } = data.token
-    const { spInfo } = data.token // this will need to be the order token to send the order
+    const { orderToken } = data.token // this will need to be the order token to send the order
     
    
     // The helpers below grab the sellers stripe account to assign to acctStripe
@@ -65,10 +67,10 @@ router.post('/create-payment-intent', async (req, res) => {
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
             let application_fee = 0;
             try {
-              let data = spInfo;
+              let data = orderToken;
               console.log('data in the seller try', data)
               if (data) {
-                const spResponse = await Orders.orderMaker(data.spInfo);
+                const spResponse = await Orders.orderMaker(data);
                 if (spResponse) {
                   let order = {
                     userID: data.orderInfo.userID,
