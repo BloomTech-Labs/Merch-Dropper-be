@@ -1,5 +1,4 @@
 const axios = require("axios");
-const Models = require("../helperVariables/models");
 
 module.exports = {
   quoteMaker
@@ -20,7 +19,7 @@ async function quoteMaker(data) {
       data,
       config
     )
-    console.log(quote, "quote")
+   
     return quote;
 
    
