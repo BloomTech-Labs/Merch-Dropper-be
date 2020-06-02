@@ -9,6 +9,7 @@ const Models = require("../helperVariables/models");
 router.post("/", async (req, res) => {
   try {
     let design = req.body;
+    console.log('the design body', design)
     let returnTables = [
       "id",
       "design_name",
@@ -24,6 +25,7 @@ router.post("/", async (req, res) => {
       res.status(400).json({ message: "please include all required content" });
     }
   } catch (error) {
+    console.log('design error', error)
     res.status(500).json({
       error,
       message: "Unable to add this design, its not you.. its me"
