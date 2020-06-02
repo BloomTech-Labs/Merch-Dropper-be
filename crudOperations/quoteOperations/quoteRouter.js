@@ -15,26 +15,30 @@ router.post("/", async (req, res) => {
     if (data) {
       console.log(data, "data")
       const spResponse = await Quotes.quoteMaker(data.spInfo);
+      console.log(spResponse, "response SP")
       if (spResponse) {
         let quote = {
           userID: data.quoteInfo.userID, // not relevant until/if there are buyer users
           storeID: data.quoteInfo.storeID,
-          total: spResponse.total,
-          subtotal: spResponse.subtotal,
-          tax: spResponse.tax,
-          fees: spResponse.fees,
-          shipping: spResponse.shipping,
-          orderToken: spResponse.orderToken,
-          warnings: spResponse.warnings,
-          mode: spResponse.mode
+          total: spResponse.data.total,
+          subtotal: spResponse.data.subtotal,
+          tax: spResponse.data.tax,
+          fees: spResponse.data.fees,
+          shipping: spResponse.data.shipping,
+          orderToken: spResponse.data.orderToken,
+          warnings: spResponse.data.warnings,
+          mode: spResponse.data.mode
         };
         Models.Quotes.insert(quote);
         res.status(201).json({
           message:
             "You have successfully added this Quote to our DB, spResponse is from SP!",
-          quote,
-          spResponse
+          quote
+          
         });
+      }else {
+        console.log(quote)
+        res.status(500).json({msg: "quote did not send"})
       }
     // } //figure out how to test wrong or missing info here, its tricky with the api call
     // else {
