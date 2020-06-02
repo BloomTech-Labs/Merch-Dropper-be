@@ -6,6 +6,7 @@ exports.seed = function(knex) {
       size: "med",
       type: "dtg",
       designId: "1",
+      product_id: "canvas-unisex-t-shirt",
       fullSizeURL:
         "https://res.cloudinary.com/dze74ofbf/image/upload/v1581453585/wsjikfpellbybgzbymy2.jpg",
       thumbnailURL:
@@ -21,6 +22,7 @@ exports.seed = function(knex) {
       size: "med",
       type: "dtg",
       designId: "1",
+      product_id: "canvas-unisex-t-shirt",
       fullSizeURL:
         "https://res.cloudinary.com/dze74ofbf/image/upload/v1581453585/wsjikfpellbybgzbymy2.jpg",
       thumbnailURL:
