@@ -11,6 +11,7 @@ exports.up = function(knex) {
     products.string('color').notNullable();
     products.string('size').notNullable();
     products.string('type').notNullable();
+    products.string('product_id').notNullable()
     products
       .integer("storeID")
       .notNullable()
