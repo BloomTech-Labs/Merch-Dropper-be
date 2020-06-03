@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
     //   res.status(400).json({ message: "please include all required content" });
     // }
   } catch (error) {
-    console.log(error)
+    console.log('product error', error)
     res.status(500).json({
       error,
       message: "Unable to add this product, its not you.. its me"
@@ -53,6 +53,7 @@ router.post("/", async (req, res) => {
 router.post("/mockup", async (req, res) => {
   try {
     let data = req.body;
+    console.log('the data in mockup', data)
 
     if (data) {
       const URL = await Products.ShirtMaker(data);
@@ -68,7 +69,9 @@ router.post("/mockup", async (req, res) => {
     //   res.status(400).json({ message: "please include all required content" });
     // }
   } catch (error) {
+    console.log('mockup error', error)
     res.status(500).json({
+      
       error,
       message: "Error posting to ScalablePress, its not you.. its me"
     });
