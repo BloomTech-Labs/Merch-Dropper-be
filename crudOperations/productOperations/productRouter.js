@@ -39,7 +39,7 @@ router.post("/", async (req, res) => {
     //   res.status(400).json({ message: "please include all required content" });
     // }
   } catch (error) {
-    console.log('product error', error)
+    console.log('PRODUCT POST ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to add this product, its not you.. its me"
@@ -69,7 +69,7 @@ router.post("/mockup", async (req, res) => {
     //   res.status(400).json({ message: "please include all required content" });
     // }
   } catch (error) {
-    console.log('mockup error', error)
+    console.log('MOCKUP POST ERROR', error)
     res.status(500).json({
       
       error,
@@ -96,7 +96,7 @@ router.post('/price', async (req, res) => {
     res.json(response.data)
   })
   .catch(err => {
-    // console.log(err, "err")
+    console.log('PRICE POST ERROR', err)
     res.json(err)
   })
 })
@@ -110,6 +110,7 @@ router.get("/", async (req, res) => {
     const products = await Models.Products.find();
     res.status(200).json(products);
   } catch (error) {
+    console.log('GET PRODUCTS ERROR', error)
     res
       .status(500)
       .json({ error, message: "Unable to get Products, its not you.. its me" });
@@ -129,6 +130,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ message: "That product could not be found!" });
     }
   } catch (error) {
+    console.log('GET PRODUCT BY ID ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this product id, its not you.. its me"
@@ -151,6 +153,7 @@ router.get("/store/:storeID", async (req, res) => {
         .json({ message: "That store products could not be found!" });
     }
   } catch (error) {
+    console.log('GET STORE BY ID ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this store id, its not you.. its me"
@@ -174,6 +177,7 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "That product could not be found!" });
     }
   } catch (error) {
+    console.log('UPDATE PRODUCT ERROR', error)
     res.status(500).json({
       error,
       message: "Could not edit this product, its not you.. its me"
@@ -194,6 +198,7 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({ message: "Could not find that product ID" });
     }
   } catch (error) {
+    console.log('DELETE PRODUCT ERROR', error)
     res.status(500).json({
       error,
       message: "Error while deleting product, its not you.. its me"

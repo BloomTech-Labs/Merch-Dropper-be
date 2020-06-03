@@ -32,10 +32,12 @@ router.post("/", async (req, res) => {
           });
         })
         .catch((error) => {
+          console.log('FIND USER ERROR', error)
           res.status(400).json({ error: error.message });
         });
     }
   } catch (error) {
+    console.log('STORE POST ERROR', error)
     res.status(500).json({
       [error]: error.message,
       message: "Unable to add this store, its not you.. its me",
@@ -75,6 +77,7 @@ router.get("/", async (req, res) => {
       res.status(200).json(stores);
     }
   } catch (error) {
+    console.log('STORES GET ERROR', error)
     res
       .status(500)
       .json({ error, message: "Unable to get stores, its not you.. its me" });
@@ -95,6 +98,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ message: "That store could not be found!" });
     }
   } catch (error) {
+    console.log('GET STORE BY ID ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this store id, its not you.. its me",
@@ -119,6 +123,7 @@ router.get("/storename/:store_name", async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('GET STORE NAME ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this store, its not you.. its me",
@@ -142,6 +147,7 @@ router.get("/user/:userID", async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('STORES GET USER ID ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this store, its not you.. its me",
@@ -166,6 +172,7 @@ router.get("/domain/:domain_name", async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('STORES GET DOMAIN NAME ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this store, its not you.. its me",
@@ -186,6 +193,7 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "That store could not be found!" });
     }
   } catch (error) {
+    console.log('STORE UPDATE ERROR', error)
     res.status(500).json({
       error,
       message: "Could not edit this store, its not you.. its me",
@@ -209,6 +217,7 @@ router.delete("/:store_name", async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('DELETE STORE ERROR', error)
     res.status(500).json({
       error,
       message: "Error while deleting Store, its not you.. its me",

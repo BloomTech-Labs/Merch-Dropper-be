@@ -25,7 +25,7 @@ router.post("/", async (req, res) => {
       res.status(400).json({ message: "please include all required content" });
     }
   } catch (error) {
-    console.log('design error', error)
+    console.log('DESIGN POST ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to add this design, its not you.. its me"
@@ -41,6 +41,7 @@ router.get("/", async (req, res) => {
     const designs = await Models.Designs.find();
     res.status(200).json(designs);
   } catch (error) {
+    console.log('DESIGN GET ALL ERROR',error)
     res
       .status(500)
       .json({ error, message: "Unable to get designs, its not you.. its me" });
@@ -62,6 +63,7 @@ router.get("/:designID", async (req, res) => {
         .json({ message: "Unable to find this design, double check the id" });
     }
   } catch (error) {
+    console.log('DESIGN GET ALL BY ID', error)
     res.status(500).json({
       error,
       message: "Unable to find this design id, its not you, its me..."
@@ -86,6 +88,7 @@ router.put("/:designID", async (req, res) => {
       res.status(404).json({ message: "That design could not be found!" });
     }
   } catch (error) {
+    console.log('UPDATE DESIGN ERROR', error)
     res.status(500).json({
       error,
       message: "Could not edit this design, its not you.. its me"
@@ -105,6 +108,7 @@ router.delete("/:designID", async (req, res) => {
       res.status(404).json({ message: "Could not find that design ID" });
     }
   } catch (error) {
+    console.log('DELETE DESIGN ERROR', error)
     res.status(500).json({
       error,
       message: "Error while deleting Design, its not you.. its me"

@@ -109,6 +109,7 @@ router.post('/create-payment-intent', async (req, res) => {
               //   res.status(400).json({ message: "please include all required content" });
               // }
             } catch (error) {
+              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error)
               res.status(500).json({
                 error,
                 message: "Unable to add this order, its not you.. its me"
@@ -138,7 +139,8 @@ router.post('/create-payment-intent', async (req, res) => {
                     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY_TEST,
                     clientSecret: paymentIntent.client_secret
                   });
-                } catch (err) {
+                } catch (error) {
+                  console.log('PAYMENT INTENT ERROR',error)
                   return res.status(500).send({
                     error: err.message
                   });
