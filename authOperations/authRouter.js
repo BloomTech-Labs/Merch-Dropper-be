@@ -17,7 +17,7 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json(addedUser);
   } catch (error) {
-    console.log(error)
+    console.log('AUTH REGISTER ERROR',error)
     res.status(500).json({
       error,
       message: "Username Must be Unique, please choose another"
@@ -43,7 +43,7 @@ router.post("/login", (req, res) => {
       }
     })
     .catch(error => {
-      console.log(error);
+      console.log('AUTH LOGIN ERROR', error);
       res
         .status(500)
         .json({ error, message: "There was an error logging you in" });
