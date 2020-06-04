@@ -83,12 +83,12 @@ router.get("/email/:email", async (req, res) => {
   }
 });
 
-// @desc     Edit a User by username
+// @desc     Edit a User by id
 // @route    PUT /api/users/:username
 // @access   Private
 router.put("/:id", async (req, res) => {
   try {
-    const user = await Models.Users.findById(
+    const user = await Models.Users.updateById(
       req.params.id,
       req.body
     );
@@ -98,7 +98,7 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
-    console.log('UPDATE USERNAME ERROR', error)
+    console.log('UPDATE USER ERROR', error)
     res.status(500).json({
       error,
       message: "Could not edit this user, its not you.. its me"
