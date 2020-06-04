@@ -86,10 +86,10 @@ router.get("/email/:email", async (req, res) => {
 // @desc     Edit a User by username
 // @route    PUT /api/users/:username
 // @access   Private
-router.put("/:username", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const user = await Models.Users.updateByUsername(
-      req.params.username,
+    const user = await Models.Users.findById(
+      req.params.id,
       req.body
     );
     if (user) {

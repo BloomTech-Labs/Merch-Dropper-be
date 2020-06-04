@@ -63,7 +63,7 @@ router.post('/create-payment-intent', async (req, res) => {
         const { userID } = store;
         Models.Users.findById(userID)
         .then( async seller => {
-          console.log('seller runs')
+          console.log('seller runs', seller)
             const { stripe_account } = seller;
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
             let application_fee = 0;
@@ -109,7 +109,7 @@ router.post('/create-payment-intent', async (req, res) => {
               //   res.status(400).json({ message: "please include all required content" });
               // }
             } catch (error) {
-              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error)
+              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error.response, error.data.error)
               res.status(500).json({
                 error,
                 message: "Unable to add this order, its not you.. its me"
