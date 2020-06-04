@@ -8,14 +8,14 @@ const Models = require("../helperVariables/models");
 // @route    POST /api/quotes
 // @access   Private
 router.post("/", async (req, res) => {
-  console.log('made it')
+  console.log('QUOTE RUNS')
   try {
     let data = req.body;
-    console.log('quote data', data)
+    // console.log('quote data', data)
     if (data) {
-      console.log(data, "data")
+      // console.log(data, "data")
       const spResponse = await Quotes.quoteMaker(data.spInfo);
-      console.log(spResponse.data.orderIssues, "response SP")
+      // console.log(spResponse.data.orderIssues, "response SP")
       if (spResponse) {
         let quote = {
           userID: data.quoteInfo.userID, // not relevant until/if there are buyer users

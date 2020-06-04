@@ -8,6 +8,7 @@ async function orderMaker(data) {
   let config = await {
     headers: {
       "Content-Type": "application/json",
+      // "Content-Type": "text/plain",
       Authorization: `Basic ${process.env.TEST}` //this our TEST api key - it has to be a env variable moving forward === TEST
     }
   };
