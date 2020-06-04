@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
 router.post('/create-payment-intent', async (req, res) => {
   
     const data = req.body;
-    console.log('data to payment intent', data)
+    // console.log('data to payment intent', data)
     const amount = data.amount;
     const { domain_name } = data.token
     const { orderToken } = data.token // this will need to be the order token to send the order
@@ -109,13 +109,7 @@ router.post('/create-payment-intent', async (req, res) => {
                   // console.log('ORDER DATA', order)
                   Models.Orders.insert(order);
                   calculateOrder(items) // run to assign all costs to application_fee
-                  // console.log('APPLICATION FEE', application_fee)
-                  res.status(201).json({
-                    message:
-                      "You have successfully added this Order to our DB, spResponse is from SP!",
-                    order,
-                    spResponse
-                  });
+                  // Removed the res.json from here it was throwing an error
                 }
               }
               //figure out to verify duplicate or missing data
@@ -144,12 +138,12 @@ router.post('/create-payment-intent', async (req, res) => {
                 payment_method_types: ['card'],
                 amount: amount,
                 currency: 'usd', // currency is passed to obj on feature/buyer-address branch
-                application_fee_amount: application_fee, // fee will be what scalable press needs to print given product and come to us
+                application_fee_amount: application_fee * 100, // fee will be what scalable press needs to print given product and come to us
               }, {
                   stripeAccount: acctStripe
               }).then(function(paymentIntent) {
                 try {
-                  return res.send({
+                  return res.status(201).send({
                     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY_TEST,
                     clientSecret: paymentIntent.client_secret
                   });
