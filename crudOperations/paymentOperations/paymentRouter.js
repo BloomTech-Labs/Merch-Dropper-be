@@ -109,7 +109,7 @@ router.post('/create-payment-intent', async (req, res) => {
               //   res.status(400).json({ message: "please include all required content" });
               // }
             } catch (error) {
-              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error.response, error.data.error)
+              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error, error.data)
               res.status(500).json({
                 error,
                 message: "Unable to add this order, its not you.. its me"
