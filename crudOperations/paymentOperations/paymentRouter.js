@@ -60,6 +60,7 @@ router.post('/create-payment-intent', async (req, res) => {
     Models.Stores.findByDomainName(domain_name)
     .then(store => {
         console.log('store runs', store)
+        const storeID = store.id
         const { userID } = store;
         Models.Users.findById(userID)
         .then( async seller => {
@@ -68,14 +69,18 @@ router.post('/create-payment-intent', async (req, res) => {
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
             let application_fee = 0;
             try {
-              let data = orderToken;
+              let data = {
+                "orderToken": orderToken
+              }
+        
               console.log('data in the seller try', data)
               if (data) {
                 const spResponse = await Orders.orderMaker(data);
+                console.log('SP RESPONSE', spResponse)
                 if (spResponse) {
                   let order = {
-                    userID: data.orderInfo.userID,
-                    storeID: data.orderInfo.storeID,
+                    userID: seller.id,
+                    storeID: storeID,
                     status: spResponse.status,
                     total: spResponse.total,
                     subtotal: spResponse.subtotal,
@@ -109,7 +114,13 @@ router.post('/create-payment-intent', async (req, res) => {
               //   res.status(400).json({ message: "please include all required content" });
               // }
             } catch (error) {
-              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error, error.data)
+              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error)
+              if(error.data){
+                console.log('SP ORDER ERROR DATA', error.data)
+              }
+              if (error.response.data.issues){
+                console.log('SP ORDER ERROR ISSUES', error.response.data.issues)
+              }
               res.status(500).json({
                 error,
                 message: "Unable to add this order, its not you.. its me"
