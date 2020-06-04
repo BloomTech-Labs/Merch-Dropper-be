@@ -52,6 +52,15 @@ router.post('/create-payment-intent', async (req, res) => {
     const amount = data.amount;
     const { domain_name } = data.token
     const { orderToken } = data.token // this will need to be the order token to send the order
+    let application_fee;
+    const calculateOrder = (items) => {
+      // Determine application fee here
+      // passing array of expenses
+      console.log('CALCULATE ORDER ITEMS', items)
+      const expenses = (accumulator, current) => accumulator + current
+      console.log(expenses)
+      return application_fee = items.reduce(expenses);
+    };
     
    
     // The helpers below grab the sellers stripe account to assign to acctStripe
@@ -67,7 +76,6 @@ router.post('/create-payment-intent', async (req, res) => {
           console.log('seller runs', seller)
             const { stripe_account } = seller;
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
-            let application_fee = 0;
             try {
               let data = {
                 "orderToken": orderToken
@@ -99,14 +107,16 @@ router.post('/create-payment-intent', async (req, res) => {
                     order.fees, 
                     order.shipping
                   ]
+                  console.log('ORDER DATA', order)
                   Models.Orders.insert(order);
+                  calculateOrder(items) // run to assign all costs to application_fee
+                  console.log('APPLICATION FEE', application_fee)
                   res.status(201).json({
                     message:
                       "You have successfully added this Order to our DB, spResponse is from SP!",
                     order,
                     spResponse
                   });
-                  calculateOrder(items) // run to assign all costs to application_fee
                 }
               }
               //figure out to verify duplicate or missing data
@@ -126,17 +136,11 @@ router.post('/create-payment-intent', async (req, res) => {
                 message: "Unable to add this order, its not you.. its me"
               });
             }
-            const calculateOrder = (items) => {
-              // Determine application fee here
-              // passing array of expenses
-              const expenses = (accumulator, current) => accumulator + current
-              let application_fee = items.reduce(expenses);
-              return application_fee;
-            };
+
 
             // const appFee = await calculateOrder(); // hopefully
             // console.log('the application fee details', appFee)
-
+            
             await stripe.paymentIntents.create({
                 payment_method_types: ['card'],
                 amount: amount,
