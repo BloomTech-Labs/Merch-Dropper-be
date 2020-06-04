@@ -56,24 +56,23 @@ router.post('/create-payment-intent', async (req, res) => {
     const calculateOrder = (items) => {
       // Determine application fee here
       // passing array of expenses
-      console.log('CALCULATE ORDER ITEMS', items)
+      // console.log('CALCULATE ORDER ITEMS', items)
       const expenses = (accumulator, current) => accumulator + current
-      console.log(expenses)
       return application_fee = items.reduce(expenses);
     };
     
    
-    // The helpers below grab the sellers stripe account to assign to acctStripe
+    // The helpers below grab the sellers stripe account to assign to acctStripe. The try sends the order token to scalable press and calulates the fee for Merch Dropper to cover costs
     let sellerAcct;
-    console.log(domain_name, 'in BE')
+    // console.log(domain_name, 'DOMAIN NAME OF REQUEST')
     Models.Stores.findByDomainName(domain_name)
     .then(store => {
-        console.log('store runs', store)
+        // console.log('store runs', store)
         const storeID = store.id
         const { userID } = store;
         Models.Users.findById(userID)
         .then( async seller => {
-          console.log('seller runs', seller)
+          // console.log('seller runs', seller)
             const { stripe_account } = seller;
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
             try {
@@ -81,10 +80,10 @@ router.post('/create-payment-intent', async (req, res) => {
                 "orderToken": orderToken
               }
         
-              console.log('data in the seller try', data)
+              // console.log('data in the seller try', data)
               if (data) {
                 const spResponse = await Orders.orderMaker(data);
-                console.log('SP RESPONSE', spResponse)
+                // console.log('SP RESPONSE', spResponse)
                 if (spResponse) {
                   let order = {
                     userID: seller.id,
@@ -107,10 +106,10 @@ router.post('/create-payment-intent', async (req, res) => {
                     order.fees, 
                     order.shipping
                   ]
-                  console.log('ORDER DATA', order)
+                  // console.log('ORDER DATA', order)
                   Models.Orders.insert(order);
                   calculateOrder(items) // run to assign all costs to application_fee
-                  console.log('APPLICATION FEE', application_fee)
+                  // console.log('APPLICATION FEE', application_fee)
                   res.status(201).json({
                     message:
                       "You have successfully added this Order to our DB, spResponse is from SP!",
