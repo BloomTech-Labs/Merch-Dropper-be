@@ -9,11 +9,29 @@ const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST_KEY); //Change S
 router.post('/', async (req, res) => {
   
     const data = req.body;
-    // console.log('data to payment intent', data)
+    console.log('data to payment intent', data)
     const amount = data.amount;
     const { domain_name } = data.token
     const { orderToken } = data.token // this will need to be the order token to send the order
     let application_fee;
+    let confirmation;
+    let paymentMethod = {
+      type: 'card',
+      billing_details: {
+        address: {
+          city: 'Durham',
+          country: 'US',
+          line1: '123 Test Road',
+          line2: '',
+          postal_code: '27713',
+          state: 'NC'
+        },
+        email: '',
+        name: '',
+        phone: ''
+      },
+      metadata: {}
+    };
     const calculateOrder = (items) => {
       // Determine application fee here
       // passing array of expenses
@@ -21,7 +39,8 @@ router.post('/', async (req, res) => {
       const expenses = (accumulator, current) => accumulator + current
       return application_fee = items.reduce(expenses);
     };
-    
+    // payment method operates as if billing and shipping ARE THE SAME prob will be fixed in a future release 👀
+
     // The helpers below grab the sellers stripe account to assign to acctStripe. The try sends the order token to scalable press and calulates the fee for Merch Dropper to cover costs
     let sellerAcct;
     // console.log(domain_name, 'DOMAIN NAME OF REQUEST')
@@ -99,17 +118,33 @@ router.post('/', async (req, res) => {
                   stripeAccount: acctStripe
               }).then(function(paymentIntent) {
                 try {
-                  return res.status(201).send({
-                    publishableKey: process.env.STRIPE_PUBLISHABLE_KEY_TEST,
-                    clientSecret: paymentIntent.client_secret
-                  });
+                  return confirmation = paymentIntent.client_secret
+                  // return res.status(201).send({
+                  //   publishableKey: process.env.STRIPE_PUBLISHABLE_KEY_TEST,
+                  //   clientSecret: paymentIntent.client_secret
+                  // });
                 } catch (error) {
                   console.log('PAYMENT INTENT ERROR',error)
                   return res.status(500).send({
                     error: err.message
                   });
                 }
-              }); 
+              });
+
+              // confirm payment with payment intent
+              await stripe.confirmCardPayment(confirmation, {
+                payment_method: paymentMethod
+              })
+              .then(function(result){
+                try {
+                  return res.status(201).json(result.paymentIntent);
+                } catch (error) {
+                  console.log('CONFIRM CARD PAYMENT ERROR', error);
+                  return res.status(500).send({
+                    error: err.message
+                  })
+                }
+              }) 
         })
     });
 });
