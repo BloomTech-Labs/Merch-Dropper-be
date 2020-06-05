@@ -132,7 +132,8 @@ router.post('/', async (req, res) => {
                 currency: 'usd', // currency is passed to obj on feature/buyer-address branch
                 application_fee_amount: application_fee * 100,
                 // fee will be what scalable press needs to print given product and come to us
-                confirm: true 
+                confirm: true,
+                payment_method: method 
               }, {
                   stripeAccount: acctStripe
               }).then(function(paymentIntent) {
@@ -150,6 +151,17 @@ router.post('/', async (req, res) => {
                 }
               });
 
+              await stripe.paymentIntents.confirm(
+                confirmation,
+                {payment_method: method}
+              )
+              .then(function(paymentIntent){
+                try{
+                  return res.status(201).json(paymentIntent)
+                } catch(error){
+                  console.log('PAYMENT INTENT CONFIRMATION ERROR', error)
+                }
+              })
         })
     });
 });
