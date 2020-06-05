@@ -6,70 +6,48 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config({ path: "./c
 
 const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST_KEY); //Change STRIPE_SECRET_TEST_KEY to STRIPE_SECRET_KEY to collect payments when stripe goes LIVE.
 
-
 router.post('/', async (req, res) => {
-    const Data = {
-        source: req.body.token.id,
-        amount: Number(req.body.amount),
-        currency: 'usd',
-        receipt_email: req.body.email,
-        shipping: {
-            address: {
-                line1: req.body.card.address_line1,
-                city: req.body.card.address_city,
-                country: req.body.country,
-                line2: req.body.address_line2,
-                postal_code: req.body.address_zip,
-                state: req.body.address_state
-            },
-            name: req.body.card.name
-        }
-    };
-    const paymentIntent = await stripe.paymentIntents.create({
-     amount: Data.amount,
-     currency: Data.currency,
-     payment_method_types: ['card'],
-     application_fee_amount: 1 * 100  // placeholder value 
-    }, {
-        stripeAccount: `{{${CONNECTED_STRIPE_ACCOUNT_ID_TEST}}}`
-    })
-    // stripe.charges.create(Data, (stripeErr, stripeRes) => {
-    //     if (stripeErr) {
-    //         res.status(500).json({ error: stripeErr });
-    //         console.log('Stripe Error',stripeErr)
-    //     } else {
-    //         res.status(200).json({ success: stripeRes })
-    //     }
-    // })
-
-})
-
-router.post('/create-payment-intent', async (req, res) => {
+  
     const data = req.body;
+    // console.log('data to payment intent', data)
     const amount = data.amount;
     const { domain_name } = data.token
-    const { spInfo } = data.token // this will need to be the order token to send the order
+    const { orderToken } = data.token // this will need to be the order token to send the order
+    let application_fee;
+    const calculateOrder = (items) => {
+      // Determine application fee here
+      // passing array of expenses
+      // console.log('CALCULATE ORDER ITEMS', items)
+      const expenses = (accumulator, current) => accumulator + current
+      return application_fee = items.reduce(expenses);
+    };
     
-   
-    // The helpers below grab the sellers stripe account to assign to acctStripe
+    // The helpers below grab the sellers stripe account to assign to acctStripe. The try sends the order token to scalable press and calulates the fee for Merch Dropper to cover costs
     let sellerAcct;
+    // console.log(domain_name, 'DOMAIN NAME OF REQUEST')
     Models.Stores.findByDomainName(domain_name)
     .then(store => {
+        // console.log('store runs', store)
+        const storeID = store.id
         const { userID } = store;
         Models.Users.findById(userID)
         .then( async seller => {
+          // console.log('seller runs', seller)
             const { stripe_account } = seller;
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
-            let application_fee = 0;
             try {
-              let data = spInfo;
-              console.log('data in the seller try', data)
+              let data = {
+                "orderToken": orderToken
+              }
+        
+              // console.log('data in the seller try', data)
               if (data) {
-                const spResponse = await Orders.orderMaker(data.spInfo);
+                const spResponse = await Orders.orderMaker(data);
+                // console.log('SP RESPONSE', spResponse)
                 if (spResponse) {
                   let order = {
-                    userID: data.orderInfo.userID,
-                    storeID: data.orderInfo.storeID,
+                    userID: seller.id,
+                    storeID: storeID,
                     status: spResponse.status,
                     total: spResponse.total,
                     subtotal: spResponse.subtotal,
@@ -88,14 +66,10 @@ router.post('/create-payment-intent', async (req, res) => {
                     order.fees, 
                     order.shipping
                   ]
+                  // console.log('ORDER DATA', order)
                   Models.Orders.insert(order);
-                  res.status(201).json({
-                    message:
-                      "You have successfully added this Order to our DB, spResponse is from SP!",
-                    order,
-                    spResponse
-                  });
                   calculateOrder(items) // run to assign all costs to application_fee
+                  // Removed the res.json from here it was throwing an error
                 }
               }
               //figure out to verify duplicate or missing data
@@ -103,36 +77,34 @@ router.post('/create-payment-intent', async (req, res) => {
               //   res.status(400).json({ message: "please include all required content" });
               // }
             } catch (error) {
+              console.log('ERROR SENDING ORDER TO SCALABLE PRESS', error)
+              if(error.data){
+                console.log('SP ORDER ERROR DATA', error.data)
+              }
+              if (error.response.data.issues){
+                console.log('SP ORDER ERROR ISSUES', error.response.data.issues)
+              }
               res.status(500).json({
                 error,
                 message: "Unable to add this order, its not you.. its me"
               });
             }
-            const calculateOrder = (items) => {
-              // Determine application fee here
-              // passing array of expenses
-              const expenses = (accumulator, current) => accumulator + current
-              let application_fee = items.reduce(expenses);
-              return application_fee;
-            };
-
-            // const appFee = await calculateOrder(); // hopefully
-            // console.log('the application fee details', appFee)
 
             await stripe.paymentIntents.create({
                 payment_method_types: ['card'],
                 amount: amount,
                 currency: 'usd', // currency is passed to obj on feature/buyer-address branch
-                application_fee_amount: application_fee, // fee will be what scalable press needs to print given product and come to us
+                application_fee_amount: application_fee * 100, // fee will be what scalable press needs to print given product and come to us
               }, {
                   stripeAccount: acctStripe
               }).then(function(paymentIntent) {
                 try {
-                  return res.send({
+                  return res.status(201).send({
                     publishableKey: process.env.STRIPE_PUBLISHABLE_KEY_TEST,
                     clientSecret: paymentIntent.client_secret
                   });
-                } catch (err) {
+                } catch (error) {
+                  console.log('PAYMENT INTENT ERROR',error)
                   return res.status(500).send({
                     error: err.message
                   });

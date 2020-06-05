@@ -17,6 +17,7 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json(addedUser);
   } catch (error) {
+    console.log('AUTH REGISTER ERROR',error)
     res.status(500).json({
       error,
       message: "Username Must be Unique, please choose another"
@@ -26,9 +27,9 @@ router.post("/register", async (req, res) => {
 
 // the login endpoint
 router.post("/login", (req, res) => {
-  let { username, password } = req.body;
+  let { email, password } = req.body;
 
-  Models.Users.findByUsername(username)
+  Models.Users.findByEmail(email)
     .first()
     .then(user => {
       if (user && bcrypt.compareSync(password, user.password)) {
@@ -42,7 +43,7 @@ router.post("/login", (req, res) => {
       }
     })
     .catch(error => {
-      // console.log(error);
+      console.log('AUTH LOGIN ERROR', error);
       res
         .status(500)
         .json({ error, message: "There was an error logging you in" });

@@ -8,10 +8,10 @@ const Models = require("../helperVariables/models");
 // @route    POST /api/quotes
 // @access   Private
 router.post("/", async (req, res) => {
-  console.log('made it')
+  console.log('QUOTE RUNS')
   try {
     let data = req.body;
-    console.log('quote data', data)
+    // console.log('quote data', data)
     if (data) {
       // console.log(data, "data")
       const spResponse = await Quotes.quoteMaker(data.spInfo);
@@ -38,6 +38,7 @@ router.post("/", async (req, res) => {
         });
       }else {
         // console.log(quote)
+        console.log('QUOTE OBJECT ATTEMPT', quote)
         res.status(500).json({msg: "quote did not send"})
       }
     // } //figure out how to test wrong or missing info here, its tricky with the api call
@@ -45,7 +46,7 @@ router.post("/", async (req, res) => {
     //   res.status(400).json({ message: "please include all required content" });
     }
   }catch (error) {
-    console.log(error)
+    console.log('POST QUOTE ERROR', error)
     res.status(500).json({
       error
     });
@@ -61,6 +62,7 @@ router.get("/", async (req, res) => {
     // console.log(quotes);
     res.status(200).json(quotes);
   } catch (error) {
+    console.log('GET QUOTE ERROR', error)
     res
       .status(500)
       .json({ error, message: "Unable to get quotes, its not you.. its me" });
@@ -81,6 +83,7 @@ router.get("/:id", async (req, res) => {
         .json({ message: "Unable to find this quote, double check the id" });
     }
   } catch (error) {
+    console.log('GET QUOTE BY ID ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this quote id, its not you.. its me"
@@ -104,6 +107,7 @@ router.get("/quotetoken/:orderToken", async (req, res) => {
       });
     }
   } catch (error) {
+    console.log('GET QUOTE TOKEN ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this order id, its not you.. its me"
@@ -123,6 +127,7 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "That quote could not be found!" });
     }
   } catch (error) {
+    console.log('UPDATE QUOTE ERROR', error)
     res.status(500).json({
       error,
       message: "Could not edit this quote, its not you.. its me"
@@ -147,6 +152,7 @@ router.put("/ordertokenedit/:orderToken", async (req, res) => {
       res.status(404).json({ message: "That quote could not be found!" });
     }
   } catch (error) {
+    console.log('UPDATE ORDER TOKEN ERROR', error)
     res.status(500).json({
       error,
       message: "Could not edit this quote, its not you.. its me"
@@ -166,6 +172,7 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({ message: "Could not find that quote ID" });
     }
   } catch (error) {
+    console.log('DELETE QUOTE ERROR', error)
     res.status(500).json({
       error,
       message: "Error while deleting Quote, its not you.. its me"
@@ -187,6 +194,7 @@ router.delete("/ordertoken/:orderToken", async (req, res) => {
         .json({ message: "Could not find that quote by given quote token" });
     }
   } catch (error) {
+    console.log('DELETE QUOTE BY ORDERTOKEN ERROR', error)
     res.status(500).json({
       error,
       message: "Error while deleting Quote, its not you.. its me"

@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
     const users = await Models.Users.find();
     res.status(200).json(users);
   } catch (error) {
+    console.log('GET ALL USERS ERROR', error)
     res
       .status(500)
       .json({ error, message: "Unable to get users, its not you.. its me" });
@@ -30,6 +31,7 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
+    console.log('GET USER BY ID ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this user id, its not you.. its me"
@@ -50,6 +52,7 @@ router.get("/username/:username", async (req, res) => {
       res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
+    console.log('GET USERNAME ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this user, its not you.. its me"
@@ -72,6 +75,7 @@ router.get("/email/:email", async (req, res) => {
         .json({ message: "That user could not be found by email!" });
     }
   } catch (error) {
+    console.log('GET EMAIL ERROR', error)
     res.status(500).json({
       error,
       message: "Unable to find this user, its not you.. its me"
@@ -79,13 +83,13 @@ router.get("/email/:email", async (req, res) => {
   }
 });
 
-// @desc     Edit a User by username
+// @desc     Edit a User by id
 // @route    PUT /api/users/:username
 // @access   Private
-router.put("/:username", async (req, res) => {
+router.put("/:id", async (req, res) => {
   try {
-    const user = await Models.Users.updateByUsername(
-      req.params.username,
+    const user = await Models.Users.updateById(
+      req.params.id,
       req.body
     );
     if (user) {
@@ -94,6 +98,7 @@ router.put("/:username", async (req, res) => {
       res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
+    console.log('UPDATE USER ERROR', error)
     res.status(500).json({
       error,
       message: "Could not edit this user, its not you.. its me"
@@ -113,6 +118,7 @@ router.delete("/:username", async (req, res) => {
       res.status(404).json({ message: "User unable to be deleted!" });
     }
   } catch (error) {
+    console.log('DELETE USER ERROR', error)
     res.status(500).json({
       error,
       message: "Error while deleting User, its not you.. its me"
