@@ -16,19 +16,19 @@ router.post('/', async (req, res) => {
     let application_fee;
     let confirmation;
     let paymentMethod = {
-      type: 'card',
+      type: data.token.card.object,
       billing_details: {
         address: {
-          city: 'Durham',
-          country: 'US',
-          line1: '123 Test Road',
-          line2: '',
-          postal_code: '27713',
-          state: 'NC'
+          city: data.token.card.address_city,
+          country: data.token.card.address_country,
+          line1: data.token.card.address_line1,
+          line2: data.token.card.address_line2,
+          postal_code: data.token.card.address_zip,
+          state: data.token.card.address_state
         },
-        email: '',
-        name: '',
-        phone: ''
+        email: data.email,
+        name: data.token.card.name,
+        phone: null // set for null unless it is passed later
       },
       metadata: {}
     };
