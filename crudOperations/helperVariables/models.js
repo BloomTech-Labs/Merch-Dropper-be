@@ -9,7 +9,7 @@ class Model {
     return db(this.tableName)
       .insert(newItem)
       .then(ids => {
-        const [id] = ids;
+        const id = ids;
         return this.findById(id);
       });
   }
