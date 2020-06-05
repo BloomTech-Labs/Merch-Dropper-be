@@ -13,9 +13,9 @@ router.post("/", async (req, res) => {
     let data = req.body;
     console.log('quote data', data)
     if (data) {
-      console.log(data, "data")
+      // console.log(data, "data")
       const spResponse = await Quotes.quoteMaker(data.spInfo);
-      console.log(spResponse, "response SP")
+      // console.log(spResponse, "response SP")
       if (spResponse) {
         let quote = {
           userID: data.quoteInfo.userID, // not relevant until/if there are buyer users
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
           
         });
       }else {
-        console.log(quote)
+        // console.log(quote)
         res.status(500).json({msg: "quote did not send"})
       }
     // } //figure out how to test wrong or missing info here, its tricky with the api call
@@ -45,6 +45,7 @@ router.post("/", async (req, res) => {
     //   res.status(400).json({ message: "please include all required content" });
     }
   }catch (error) {
+    console.log(error)
     res.status(500).json({
       error
     });
