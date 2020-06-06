@@ -120,12 +120,12 @@ router.post('/', async (req, res) => {
               await stripe.charges.create(
                 {
                   amount: amount,
-                  currency: 'usd',
+                  currency: 'usd', // US based so hardcoded
                   source: data.token.id,
                   receipt_email: data.token.email,
                   application_fee_amount: application_fee * 100
                 }, {
-                  stripeAccount: acctStripe
+                  stripeAccount: acctStripe // Stripe-Account header
               })
                 .then(function(charge) {
                   try {
