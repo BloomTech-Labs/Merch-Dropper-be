@@ -7,18 +7,14 @@ if (process.env.NODE_ENV !== 'production') require('dotenv').config({ path: "./c
 const stripe = require('stripe')(process.env.STRIPE_SECRET_TEST_KEY); //Change STRIPE_SECRET_TEST_KEY to STRIPE_SECRET_KEY to collect payments when stripe goes LIVE.
 
 router.post('/', async (req, res) => {
-  
     const data = req.body;
-    console.log('data to payment intent', data)
     const amount = data.amount;
-
-    const { type } = data.token
     const { domain_name } = data.token
-    const { orderToken } = data.token // this will need to be the order token to send the order
+    const { orderToken } = data.token // order token for scalable press
     let application_fee;
-    let confirmation;// to be used for client secret in confirm payment
-    let method;
-    // stripe token object corrected for payment method
+    let confirmation; // to be used for client secret in confirm payment
+    let method; // initialized if needed for payment method object
+    // stripe token object reverted for "source" in create charge
     const stripeToken = data.token;
     delete stripeToken.domain_name;
     delete stripeToken.orderToken;
@@ -28,28 +24,29 @@ router.post('/', async (req, res) => {
       const expenses = (accumulator, current) => accumulator + current
       return application_fee = items.reduce(expenses);
     };
-    // payment method operates as if billing and shipping ARE THE SAME prob will be fixed in a future release 👀
 
-    // The helpers below grab the sellers stripe account to assign to acctStripe. The try sends the order token to scalable press and calulates the fee for Merch Dropper to cover costs
     let sellerAcct;
     // console.log(domain_name, 'DOMAIN NAME OF REQUEST')
+    // find the store
     Models.Stores.findByDomainName(domain_name)
     .then(store => {
         // console.log('store runs', store)
         const storeID = store.id
         const { userID } = store;
+        // find the user
         Models.Users.findById(userID)
         .then( async seller => {
           // console.log('seller runs', seller)
             const { stripe_account } = seller;
             const acctStripe = stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST ;
             try {
+              // has to be a json object
               let data = {
                 "orderToken": orderToken
               }
-        
               // console.log('data in the seller try', data)
               if (data) {
+                // send order token to SP
                 const spResponse = await Orders.orderMaker(data);
                 // console.log('SP RESPONSE', spResponse)
                 if (spResponse) {
@@ -98,41 +95,19 @@ router.post('/', async (req, res) => {
               });
             };
 
-            // payment method for payment intent
-            // await stripe.paymentMethods.create({
-            //   type: type,
-            //   card: {
-            //     token: stripeToken
-            //   }
-            // })
-            // .then(function(paymentMethod){
-            //   try {
-            //     return method = paymentMethod;
-            //   } catch (error) {
-            //     console.log('PAYMENT METHOD ERROR', error);
-            //     return res.status(500).send({
-            //       error: err.message
-            //     })
-            //   }
-            // });
-
+            // create a payment intent
             await stripe.paymentIntents.create({
                 payment_method_types: ['card'],
                 amount: amount,
-                currency: 'usd', // currency is passed to obj on feature/buyer-address branch
+                currency: 'usd', // US based so hard coded
                 application_fee_amount: application_fee * 100,
-                // fee will be what scalable press needs to print given product and come to us
                 // confirm: true,
                 // payment_method: method 
               }, {
-                  stripeAccount: acctStripe
+                  stripeAccount: acctStripe // stripe-account header
               }).then(function(paymentIntent) {
                 try {
                   return confirmation = paymentIntent.client_secret
-                  // return res.status(201).send({
-                  //   publishableKey: process.env.STRIPE_PUBLISHABLE_KEY_TEST,
-                  //   clientSecret: paymentIntent.client_secret
-                  // });
                 } catch (error) {
                   console.log('PAYMENT INTENT ERROR',error)
                   return res.status(500).send({
@@ -141,7 +116,7 @@ router.post('/', async (req, res) => {
                 }
               });
 
-              // create a charge
+              // create a charge ENDGAME DO NOT TOUCH UNLESS ABSOLUTELY CERTAIN
               await stripe.charges.create(
                 {
                   amount: amount,
