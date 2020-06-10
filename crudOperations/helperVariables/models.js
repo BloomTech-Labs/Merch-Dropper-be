@@ -194,7 +194,7 @@ async function addEntry(tableName, entry, returnTables) {
 }
 
 function findUserByDomain(domain_name) {
-  return db("stores").select(`users.*`).join('users', 'users.id', '=', 'stores.userID').where({domain_name})
+  return db("stores").select(`users.*`).join('users', 'users.id', '=', 'stores.userID').where({domain_name}).first()
 }
 
 module.exports = { Users, Stores, Designs, Quotes, Orders, Products, findUserByDomain, addEntry };
