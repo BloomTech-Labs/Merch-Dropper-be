@@ -8,7 +8,7 @@ class Model {
   insert(newItem) {
     return db(this.tableName)
       .insert(newItem)
-      .then(ids => {
+      .then((ids) => {
         const [id] = ids;
         return this.findById(id);
       });
@@ -19,24 +19,15 @@ class Model {
   }
 
   findById(id) {
-    return db(this.tableName)
-      .where("id", id)
-      .select("*")
-      .first();
+    return db(this.tableName).where("id", id).select("*").first();
   }
 
   findByEmail(email) {
-    return db(this.tableName)
-      .where("email", email)
-      .select("*")
-      .first();
+    return db(this.tableName).where("email", email).select("*").first();
   }
 
   findBySPId(spOrderID) {
-    return db(this.tableName)
-      .where("spOrderID", spOrderID)
-      .select("*")
-      .first();
+    return db(this.tableName).where("spOrderID", spOrderID).select("*").first();
   } //may need to restrict what this returns after development, perhaps in the router that uses it by destructuring res.json
 
   findByOrderToken(orderToken) {
@@ -47,24 +38,16 @@ class Model {
   }
 
   findByUsername(username) {
-    return db(this.tableName)
-      .where("username", username)
-      .select("*")
-      .first();
+    return db(this.tableName).where("username", username).select("*").first();
   }
 
   //find store by userID
   findByUserID(userID) {
-    return db(this.tableName)
-      .where("userID", userID)
-      .select("*")
-      .first();
+    return db(this.tableName).where("userID", userID).select("*").first();
   }
 
   findByStoreID(storeID) {
-    return db(this.tableName)
-      .where("storeID", storeID)
-      .select("*");
+    return db(this.tableName).where("storeID", storeID).select("*");
   }
 
   findByStoreName(store_name) {
@@ -95,7 +78,7 @@ class Model {
     return db(this.tableName)
       .where("id", id)
       .update(changes)
-      .then(changesMade => {
+      .then((changesMade) => {
         if (changesMade > 0) {
           return this.findById(id);
         } else {
@@ -108,7 +91,7 @@ class Model {
     return db(this.tableName)
       .where("username", username)
       .update(changes)
-      .then(changesMade => {
+      .then((changesMade) => {
         if (changesMade > 0) {
           return this.findByUsername(username);
         } else {
@@ -121,7 +104,7 @@ class Model {
     return db(this.tableName)
       .where("orderToken", orderToken)
       .update(changes)
-      .then(changesMade => {
+      .then((changesMade) => {
         if (changesMade > 0) {
           return this.findByOrderToken(orderToken);
         } else {
@@ -134,7 +117,7 @@ class Model {
     return db(this.tableName)
       .where("spOrderID", spOrderID)
       .update(changes)
-      .then(count => {
+      .then((count) => {
         if (count > 0) {
           return this.findBySPId(spOrderID);
         } else {
@@ -144,35 +127,24 @@ class Model {
   }
 
   removeById(id) {
-    return db(this.tableName)
-      .where("id", id)
-      .del();
+    return db(this.tableName).where("id", id).del();
   }
 
   removeByOrderToken(orderToken) {
-    return db(this.tableName)
-      .where("orderToken", orderToken)
-      .del();
+    return db(this.tableName).where("orderToken", orderToken).del();
   }
 
   removeByUsername(username) {
-    return db(this.tableName)
-      .where("username", username)
-      .del();
+    return db(this.tableName).where("username", username).del();
   }
 
   removeByStoreName(store_name) {
-    return db(this.tableName)
-      .where("store_name", store_name)
-      .del();
+    return db(this.tableName).where("store_name", store_name).del();
   }
 
   removeBySpOrderID(spOrderID) {
-    return db(this.tableName)
-      .where("spOrderID", spOrderID)
-      .del();
+    return db(this.tableName).where("spOrderID", spOrderID).del();
   }
-  
 }
 
 // this code is creating a new class object for each of the relevant tables to be exported and used in each of the router files
@@ -186,15 +158,26 @@ const Products = new Model("products");
 // POST AND PUT FUNCTIONS HERE
 
 async function addEntry(tableName, entry, returnTables) {
-  const [addedItem] = await db(tableName)
-    .returning(returnTables)
-    .insert(entry);
+  const [addedItem] = await db(tableName).returning(returnTables).insert(entry);
 
   return addedItem;
 }
 
 function findUserByDomain(domain_name) {
-  return db("stores").select(`users.*`).join('users', 'users.id', '=', 'stores.userID').where({domain_name}).first()
+  return db("stores")
+    .select(`users.*`)
+    .join("users", "users.id", "=", "stores.userID")
+    .where({ domain_name })
+    .first();
 }
 
-module.exports = { Users, Stores, Designs, Quotes, Orders, Products, findUserByDomain, addEntry };
+module.exports = {
+  Users,
+  Stores,
+  Designs,
+  Quotes,
+  Orders,
+  Products,
+  findUserByDomain,
+  addEntry,
+};

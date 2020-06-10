@@ -33,7 +33,7 @@ describe("ROUTE TESTING", () => {
       });
       it("should return a JSON object from the index route", async () => {
         const expectedBody = {
-          status: "The Merch Dropper server is running!!"
+          status: "The Merch Dropper server is running!!",
         };
 
         const response = await request(server).get("/");
@@ -66,9 +66,9 @@ describe("ROUTE TESTING", () => {
             state: "Georgia",
             zip_code: 30313,
             country: "USA",
-            email: "merchdropper20@gmail.com"
+            email: "merchdropper20@gmail.com",
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(201);
           });
       });
@@ -86,9 +86,9 @@ describe("ROUTE TESTING", () => {
             state: "Georgia",
             zip_code: 30313,
             country: "USA",
-            email: "merchdropper20@gmail.com"
+            email: "merchdropper20@gmail.com",
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(500);
           });
       });
@@ -100,9 +100,9 @@ describe("ROUTE TESTING", () => {
           .post("/api/auth/login")
           .send({
             username: "TESTUSER",
-            password: "TESTUSER"
+            password: "TESTUSER",
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(200);
           });
       });
@@ -111,9 +111,9 @@ describe("ROUTE TESTING", () => {
           .post("/api/auth/login")
           .send({
             username: "invalid",
-            password: "TESTUSER"
+            password: "TESTUSER",
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(401);
           });
       });
@@ -122,19 +122,19 @@ describe("ROUTE TESTING", () => {
           .post("/api/auth/login")
           .send({
             username: "TESTUSER",
-            password: "invalid"
+            password: "invalid",
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(401);
           });
       });
     });
 
     describe("Gets all users", () => {
-      it("GET /api/users", done => {
+      it("GET /api/users", (done) => {
         request(server)
           .get("/api/users/")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
@@ -142,27 +142,27 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get user by id", () => {
-      it("GET /api/users/1", done => {
+      it("GET /api/users/1", (done) => {
         request(server)
           .get("/api/users/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a user that doesn't exist - status check", done => {
+      it("Get a user that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/users/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a user that doesn't exist - message check", done => {
+      it("Get a user that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/users/999")
-          .then(response => {
+          .then((response) => {
             const expectedBody = { message: "That user could not be found!" };
             expect(response.body).toEqual(expectedBody);
 
@@ -172,27 +172,27 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get user by username", () => {
-      it("GET /api/users/username/:username", done => {
+      it("GET /api/users/username/:username", (done) => {
         request(server)
           .get("/api/users/username/TESTUSER")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a user that doesn't exist - status check", done => {
+      it("Get a user that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/users/username/DoesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a user that doesn't exist - message check", done => {
+      it("Get a user that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/users/username/DoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = { message: "That user could not be found!" };
             expect(response.body).toEqual(expectedBody);
 
@@ -202,36 +202,36 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a user by username", () => {
-      it("PUT /api/users/:username", done => {
+      it("PUT /api/users/:username", (done) => {
         request(server)
           .put("/api/users/TESTUSER")
           .send({
-            first_name: "TESTUSEREDITED"
+            first_name: "TESTUSEREDITED",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a user that doesn't exist - status check", done => {
+      it("Edit a user that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/users/DoesntExist")
           .send({
-            first_name: "TESTUSEREDITED"
+            first_name: "TESTUSEREDITED",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a user that doesn't exist - message check", done => {
+      it("Edit a user that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/users/DoesntExist")
           .send({
-            first_name: "TESTUSEREDITED"
+            first_name: "TESTUSEREDITED",
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = { message: "That user could not be found!" };
             expect(response.body).toEqual(expectedBody);
 
@@ -241,27 +241,27 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a user by username", () => {
-      it("DELETE /api/users/:username", done => {
+      it("DELETE /api/users/:username", (done) => {
         request(server)
           .delete("/api/users/TESTUSER")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a user that doesn't exist - status check", done => {
+      it("Delete a user that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/users/DoesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Delete a user that doesn't exist - message check", done => {
+      it("Delete a user that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/users/DoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = { message: "User unable to be deleted!" };
             expect(response.body).toEqual(expectedBody);
 
@@ -280,13 +280,13 @@ describe("ROUTE TESTING", () => {
             // active: 1,
             store_name: "NewStoreForTest",
             domain_name: "NewStoreForTest",
-            email: "merchdropper20@gmail.com"
+            email: "merchdropper20@gmail.com",
             // hero_ImageURL:
             //   "https://www.dalesjewelers.com/wp-content/uploads/2018/10placeholder-silhouette-male.png",
             // logo_url: "https://uxmasters.org/images/ant_logo.svg",
             // userID: 1
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(201);
           });
       });
@@ -299,19 +299,19 @@ describe("ROUTE TESTING", () => {
             hero_ImageURL:
               "https://www.dalesjewelers.com/wp-content/uploads/2018/10placeholder-silhouette-male.png",
             logo_url: "https://uxmasters.org/images/ant_logo.svg",
-            userID: 1
+            userID: 1,
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(400);
           });
       });
     });
 
     describe("Gets all stores", () => {
-      it("GET /api/stores", done => {
+      it("GET /api/stores", (done) => {
         request(server)
           .get("/api/stores/")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
@@ -319,29 +319,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get a store by id", () => {
-      it("GET /api/stores/1", done => {
+      it("GET /api/stores/1", (done) => {
         request(server)
           .get("/api/stores/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a store that doesn't exist - status check", done => {
+      it("Get a store that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/stores/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a store that doesn't exist - message check", done => {
+      it("Get a store that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/stores/999")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That store could not be found!"
+              message: "That store could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -351,30 +351,30 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get store by name", () => {
-      it("GET /api/stores/storename/:store_name", done => {
+      it("GET /api/stores/storename/:store_name", (done) => {
         request(server)
           .get("/api/stores/storename/NewStore")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a store that doesn't exist - status check", done => {
+      it("Get a store that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/stores/storename/DoesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a store that doesn't exist - message check", done => {
+      it("Get a store that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/stores/storename/DoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
               message:
-                "Please enter a valid store name, keep in mind that store names are case sensitive"
+                "Please enter a valid store name, keep in mind that store names are case sensitive",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -384,30 +384,30 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get store by domain_name", () => {
-      it("GET /api/stores/domain/:domain_name", done => {
+      it("GET /api/stores/domain/:domain_name", (done) => {
         request(server)
           .get("/api/stores/domain/TheMerchMan")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a store domain_name that doesn't exist - status check", done => {
+      it("Get a store domain_name that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/stores/domain/ThisDomainDoesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a store domain_name that doesn't exist - message check", done => {
+      it("Get a store domain_name that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/stores/domain/ThisDomainDoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
               message:
-                "Please enter a valid store domain_name, keep in mind that domain names are case sensitive"
+                "Please enter a valid store domain_name, keep in mind that domain names are case sensitive",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -417,38 +417,38 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a store by id", () => {
-      it("PUT /api/stores/:id", done => {
+      it("PUT /api/stores/:id", (done) => {
         request(server)
           .put("/api/stores/1")
           .send({
-            store_name: "NewStoreEDITED"
+            store_name: "NewStoreEDITED",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a store that doesn't exist - status check", done => {
+      it("Edit a store that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/stores/999")
           .send({
-            store_name: "NewStoreEDITED"
+            store_name: "NewStoreEDITED",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a store that doesn't exist - message check", done => {
+      it("Edit a store that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/stores/999")
           .send({
-            store_name: "NewStoreEDITED"
+            store_name: "NewStoreEDITED",
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That store could not be found!"
+              message: "That store could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -458,30 +458,30 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a store by storename", () => {
-      it("DELETE /api/stores/:storename", done => {
+      it("DELETE /api/stores/:storename", (done) => {
         request(server)
           .delete("/api/stores/NewStore")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a store that doesn't exist - status check", done => {
+      it("Delete a store that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/stores/DoesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Delete a store that doesn't exist - message check", done => {
+      it("Delete a store that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/stores/DoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
               message:
-                "Please enter a valid store name, keep in mind that store names are case sensitive"
+                "Please enter a valid store name, keep in mind that store names are case sensitive",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -507,12 +507,12 @@ describe("ROUTE TESTING", () => {
                   artwork:
                     "http://oo-prod.s3.amazonaws.com/public/artworks/2020/01/30/1148fc23dfe99023/original.png",
                   dimensions: { width: "10" },
-                  position: { horizontal: "R", offset: { top: "2" } }
-                }
-              }
-            }
+                  position: { horizontal: "R", offset: { top: "2" } },
+                },
+              },
+            },
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(201);
           });
       });
@@ -528,9 +528,9 @@ describe("ROUTE TESTING", () => {
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare arcu vulputate arcu suscipit venenatis. Donec sit amet ipsum ac urna dignissim euismod a euismod nisi. Nullam pulvinar odio semper.",
             price: 10.3,
-            storeID: 1
+            storeID: 1,
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(201);
           });
       });
@@ -547,12 +547,12 @@ describe("ROUTE TESTING", () => {
                   artwork:
                     "http://oo-prod.s3.amazonaws.com/public/artworks/2020/01/30/1148fc23dfe99023/original.png",
                   dimensions: { width: "10" },
-                  position: { horizontal: "R", offset: { top: "2" } }
-                }
-              }
-            }
+                  position: { horizontal: "R", offset: { top: "2" } },
+                },
+              },
+            },
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(500);
           });
       });
@@ -567,19 +567,19 @@ describe("ROUTE TESTING", () => {
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare arcu vulputate arcu suscipit venenatis. Donec sit amet ipsum ac urna dignissim euismod a euismod nisi. Nullam pulvinar odio semper.",
             price: 10.3,
-            storeID: 1
+            storeID: 1,
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(500);
           });
       });
     });
 
     describe("Gets all products", () => {
-      it("GET /api/products", done => {
+      it("GET /api/products", (done) => {
         request(server)
           .get("/api/products/")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
@@ -587,29 +587,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get a product by id", () => {
-      it("GET /api/products/1", done => {
+      it("GET /api/products/1", (done) => {
         request(server)
           .get("/api/products/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a product that doesn't exist - status check", done => {
+      it("Get a product that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/products/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a product that doesn't exist - message check", done => {
+      it("Get a product that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/products/999")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That product could not be found!"
+              message: "That product could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -619,7 +619,7 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a product by id", () => {
-      it("PUT /api/products/:id", done => {
+      it("PUT /api/products/:id", (done) => {
         request(server)
           .put("/api/products/1")
           .send({
@@ -631,14 +631,14 @@ describe("ROUTE TESTING", () => {
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare arcu vulputate arcu suscipit venenatis. Donec sit amet ipsum ac urna dignissim euismod a euismod nisi. Nullam pulvinar odio semper.",
             price: 10.3,
-            storeID: 1
+            storeID: 1,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a product that doesn't exist - status check", done => {
+      it("Edit a product that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/products/999")
           .send({
@@ -650,15 +650,15 @@ describe("ROUTE TESTING", () => {
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare arcu vulputate arcu suscipit venenatis. Donec sit amet ipsum ac urna dignissim euismod a euismod nisi. Nullam pulvinar odio semper.",
             price: 10.3,
-            storeID: 1
+            storeID: 1,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a product that doesn't exist - message check", done => {
+      it("Edit a product that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/products/999")
           .send({
@@ -670,11 +670,11 @@ describe("ROUTE TESTING", () => {
             description:
               "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare arcu vulputate arcu suscipit venenatis. Donec sit amet ipsum ac urna dignissim euismod a euismod nisi. Nullam pulvinar odio semper.",
             price: 10.3,
-            storeID: 1
+            storeID: 1,
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That product could not be found!"
+              message: "That product could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -684,29 +684,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a product by id", () => {
-      it("DELETE /api/products/:id", done => {
+      it("DELETE /api/products/:id", (done) => {
         request(server)
           .delete("/api/products/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a product that doesn't exist - status check", done => {
+      it("Delete a product that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/products/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Delete a product that doesn't exist - message check", done => {
+      it("Delete a product that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/products/999")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Could not find that product ID"
+              message: "Could not find that product ID",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -727,9 +727,9 @@ describe("ROUTE TESTING", () => {
             design_url: "https://uxmasters.org/images/ant_logo.svg",
             thumbnail_url: "https://uxmasters.org/images/ant_logo.svg",
             storeID: 1,
-            userID: 1
+            userID: 1,
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(201);
           });
       });
@@ -740,19 +740,19 @@ describe("ROUTE TESTING", () => {
             design_url: "https://uxmasters.org/images/ant_logo.svg",
             thumbnail_url: "https://uxmasters.org/images/ant_logo.svg",
             storeID: 1,
-            userID: 1
+            userID: 1,
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(400);
           });
       });
     });
 
     describe("Gets all designs", () => {
-      it("GET /api/designs", done => {
+      it("GET /api/designs", (done) => {
         request(server)
           .get("/api/designs/")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
@@ -760,29 +760,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get a design by id", () => {
-      it("GET /api/designs/:designID", done => {
+      it("GET /api/designs/:designID", (done) => {
         request(server)
           .get("/api/designs/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a design that doesn't exist - status check", done => {
+      it("Get a design that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/designs/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a design that doesn't exist - message check", done => {
+      it("Get a design that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/designs/999")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Unable to find this design, double check the id"
+              message: "Unable to find this design, double check the id",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -792,38 +792,38 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a design by id", () => {
-      it("PUT /api/designs/:id", done => {
+      it("PUT /api/designs/:id", (done) => {
         request(server)
           .put("/api/designs/1")
           .send({
-            design_name: "EDITED"
+            design_name: "EDITED",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a design that doesn't exist - status check", done => {
+      it("Edit a design that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/designs/999")
           .send({
-            design_name: "EDITED"
+            design_name: "EDITED",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a design that doesn't exist - message check", done => {
+      it("Edit a design that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/designs/999")
           .send({
-            design_name: "EDITED"
+            design_name: "EDITED",
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That design could not be found!"
+              message: "That design could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -833,28 +833,28 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a design by id", () => {
-      it("DELETE /api/designs/:id", done => {
+      it("DELETE /api/designs/:id", (done) => {
         request(server)
           .delete("/api/designs/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a design that doesn't exist - status check", done => {
+      it("Delete a design that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/designs/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
             done();
           });
       });
-      it("Delete a design that doesn't exist - message check", done => {
+      it("Delete a design that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/designs/DoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Could not find that design ID"
+              message: "Could not find that design ID",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -873,7 +873,7 @@ describe("ROUTE TESTING", () => {
           .send({
             quoteInfo: {
               storeID: 1,
-              userID: 1
+              userID: 1,
             },
             spInfo: {
               type: "dtg",
@@ -883,14 +883,14 @@ describe("ROUTE TESTING", () => {
                   id: "canvas-unisex-t-shirt",
                   color: "Sunset",
                   quantity: 1,
-                  size: "sml"
+                  size: "sml",
                 },
                 {
                   id: "canvas-unisex-t-shirt",
                   color: "Sunset",
                   quantity: 1,
-                  size: "lrg"
-                }
+                  size: "lrg",
+                },
               ],
               address: {
                 name: "Jennie",
@@ -898,21 +898,21 @@ describe("ROUTE TESTING", () => {
                 city: "San Diego",
                 state: "California",
                 zip: "92126",
-                country: "USA"
-              }
-            }
+                country: "USA",
+              },
+            },
           })
-          .then(res => {
+          .then((res) => {
             expect(res.status).toBe(201);
           });
       });
     });
 
     describe("Gets all quotes", () => {
-      it("GET /api/quotes", done => {
+      it("GET /api/quotes", (done) => {
         request(server)
           .get("/api/quotes/")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
@@ -920,29 +920,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get a quote by id", () => {
-      it("GET /api/quotes/:quoteID", done => {
+      it("GET /api/quotes/:quoteID", (done) => {
         request(server)
           .get("/api/quotes/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a quote that doesn't exist - status check", done => {
+      it("Get a quote that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/quotes/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a quote that doesn't exist - message check", done => {
+      it("Get a quote that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/quotes/999")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Unable to find this quote, double check the id"
+              message: "Unable to find this quote, double check the id",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -952,38 +952,38 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a quote by id", () => {
-      it("PUT /api/quotes/:id", done => {
+      it("PUT /api/quotes/:id", (done) => {
         request(server)
           .put("/api/quotes/1")
           .send({
-            orderToken: "EditedQuoteTOKEN"
+            orderToken: "EditedQuoteTOKEN",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a quote that doesn't exist - status check", done => {
+      it("Edit a quote that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/quotes/999")
           .send({
-            orderToken: "EditedQuoteTOKEN"
+            orderToken: "EditedQuoteTOKEN",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a quote that doesn't exist - message check", done => {
+      it("Edit a quote that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/quotes/999")
           .send({
-            orderToken: "EditedQuoteTOKEN"
+            orderToken: "EditedQuoteTOKEN",
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That quote could not be found!"
+              message: "That quote could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -993,38 +993,38 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a quote by order token", () => {
-      it("PUT /api/quotes/ordertokenedit/:orderToken", done => {
+      it("PUT /api/quotes/ordertokenedit/:orderToken", (done) => {
         request(server)
           .put("/api/quotes/ordertokenedit/EditedQuoteTOKEN")
           .send({
-            total: 500500.21
+            total: 500500.21,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a quote that doesn't exist - status check", done => {
+      it("Edit a quote that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/quotes/ordertokenedit/doesntExist")
           .send({
-            total: 500500500.21
+            total: 500500500.21,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a quote that doesn't exist - message check", done => {
+      it("Edit a quote that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/quotes/ordertokenedit/doesntExist")
           .send({
-            total: 500500500.21
+            total: 500500500.21,
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That quote could not be found!"
+              message: "That quote could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1034,28 +1034,28 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a quote by id", () => {
-      it("DELETE /api/quotes/:id", done => {
+      it("DELETE /api/quotes/:id", (done) => {
         request(server)
           .delete("/api/quotes/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - status check", done => {
+      it("Delete a quote that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/quotes/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - message check", done => {
+      it("Delete a quote that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/quotes/DoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Could not find that quote ID"
+              message: "Could not find that quote ID",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1065,28 +1065,28 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a quote by order token", () => {
-      it("DELETE /api/orders/ordertoken/:orderToken", done => {
+      it("DELETE /api/orders/ordertoken/:orderToken", (done) => {
         request(server)
           .delete("/api/quotes/ordertoken/TESTTOKEN")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - status check", done => {
+      it("Delete a quote that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/quotes/ordertoken/doesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - message check", done => {
+      it("Delete a quote that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/quotes/ordertoken/doesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Could not find that quote by given quote token"
+              message: "Could not find that quote by given quote token",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1102,10 +1102,10 @@ describe("ROUTE TESTING", () => {
     //figure out how to test the post for order, the order ordertoken comes from quote router when a quote is submitted, will have to be grabbed from mock quote created in test
 
     describe("Gets all orders", () => {
-      it("GET /api/orders", done => {
+      it("GET /api/orders", (done) => {
         request(server)
           .get("/api/orders/")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
@@ -1113,29 +1113,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get a order by id", () => {
-      it("GET /api/orders/:orderID", done => {
+      it("GET /api/orders/:orderID", (done) => {
         request(server)
           .get("/api/orders/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a order that doesn't exist - status check", done => {
+      it("Get a order that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/orders/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a order that doesn't exist - message check", done => {
+      it("Get a order that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/orders/999")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Unable to find this order, double check the id"
+              message: "Unable to find this order, double check the id",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1145,29 +1145,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get a order by order token", () => {
-      it(" GET /api/orders/ordertoken/:orderToken", done => {
+      it(" GET /api/orders/ordertoken/:orderToken", (done) => {
         request(server)
           .get("/api/orders/ordertoken/70192HJALKANOIAMNL")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a order that doesn't exist - status check", done => {
+      it("Get a order that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/orders/ordertoken/doesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a order that doesn't exist - message check", done => {
+      it("Get a order that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/orders/ordertoken/doesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Unable to find this order, double check the id"
+              message: "Unable to find this order, double check the id",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1177,29 +1177,29 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Get a order by SP Order ID", () => {
-      it("GET /api/orders/sporderid/:spOrderID", done => {
+      it("GET /api/orders/sporderid/:spOrderID", (done) => {
         request(server)
           .get("/api/orders/sporderid/testsporderid")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Get a order that doesn't exist - status check", done => {
+      it("Get a order that doesn't exist - status check", (done) => {
         request(server)
           .get("/api/orders/sporderid/doesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Get a order that doesn't exist - message check", done => {
+      it("Get a order that doesn't exist - message check", (done) => {
         request(server)
           .get("/api/orders/sporderid/doesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Unable to find this order, double check the id"
+              message: "Unable to find this order, double check the id",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1209,38 +1209,38 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a order by id", () => {
-      it("PUT /api/orders/:id", done => {
+      it("PUT /api/orders/:id", (done) => {
         request(server)
           .put("/api/orders/1")
           .send({
-            orderToken: "EditedorderTOKEN"
+            orderToken: "EditedorderTOKEN",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a order that doesn't exist - status check", done => {
+      it("Edit a order that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/orders/999")
           .send({
-            orderToken: "EditedorderTOKEN"
+            orderToken: "EditedorderTOKEN",
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a order that doesn't exist - message check", done => {
+      it("Edit a order that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/orders/999")
           .send({
-            orderToken: "EditedorderTOKEN"
+            orderToken: "EditedorderTOKEN",
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That order could not be found!"
+              message: "That order could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1250,38 +1250,38 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a order by order token", () => {
-      it("PUT /api/orders/ordertoken/:orderToken", done => {
+      it("PUT /api/orders/ordertoken/:orderToken", (done) => {
         request(server)
           .put("/api/orders/ordertoken/EditedorderTOKEN")
           .send({
-            total: 500500.21
+            total: 500500.21,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a order that doesn't exist - status check", done => {
+      it("Edit a order that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/orders/ordertoken/doesntExist")
           .send({
-            total: 500500500.21
+            total: 500500500.21,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a order that doesn't exist - message check", done => {
+      it("Edit a order that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/orders/ordertoken/doesntExist")
           .send({
-            total: 500500500.21
+            total: 500500500.21,
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That order could not be found!"
+              message: "That order could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1291,38 +1291,38 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Edit a order by SP order ID", () => {
-      it("PUT /api/orders/sporderid/:spOrderID", done => {
+      it("PUT /api/orders/sporderid/:spOrderID", (done) => {
         request(server)
           .put("/api/orders/sporderid/testsporderid")
           .send({
-            total: 500500.21
+            total: 500500.21,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Edit a order that doesn't exist - status check", done => {
+      it("Edit a order that doesn't exist - status check", (done) => {
         request(server)
           .put("/api/orders/sporderid/doesntExist")
           .send({
-            total: 500500500.21
+            total: 500500500.21,
           })
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
 
             done();
           });
       });
-      it("Edit a order that doesn't exist - message check", done => {
+      it("Edit a order that doesn't exist - message check", (done) => {
         request(server)
           .put("/api/orders/sporderid/doesntExist")
           .send({
-            total: 500500500.21
+            total: 500500500.21,
           })
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "That order could not be found!"
+              message: "That order could not be found!",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1332,28 +1332,28 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a order by id", () => {
-      it("DELETE /api/orders/:id", done => {
+      it("DELETE /api/orders/:id", (done) => {
         request(server)
           .delete("/api/orders/1")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a order that doesn't exist - status check", done => {
+      it("Delete a order that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/orders/999")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
             done();
           });
       });
-      it("Delete a order that doesn't exist - message check", done => {
+      it("Delete a order that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/orders/DoesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Could not find that order ID"
+              message: "Could not find that order ID",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1363,28 +1363,28 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a quote by order token", () => {
-      it("DELETE /api/orders/ordertoken/:orderToken", done => {
+      it("DELETE /api/orders/ordertoken/:orderToken", (done) => {
         request(server)
           .delete("/api/orders/ordertoken/testtoken")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - status check", done => {
+      it("Delete a quote that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/orders/ordertoken/doesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - message check", done => {
+      it("Delete a quote that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/orders/ordertoken/doesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Could not find that order token"
+              message: "Could not find that order token",
             };
             expect(response.body).toEqual(expectedBody);
 
@@ -1394,28 +1394,28 @@ describe("ROUTE TESTING", () => {
     });
 
     describe("Delete a quote by SP order ID", () => {
-      it("DELETE /api/stores/sporderid/:spOrderID", done => {
+      it("DELETE /api/stores/sporderid/:spOrderID", (done) => {
         request(server)
           .delete("/api/orders/sporderid/testsporderid2")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(200);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - status check", done => {
+      it("Delete a quote that doesn't exist - status check", (done) => {
         request(server)
           .delete("/api/orders/sporderid/doesntExist")
-          .then(response => {
+          .then((response) => {
             expect(response.status).toBe(404);
             done();
           });
       });
-      it("Delete a quote that doesn't exist - message check", done => {
+      it("Delete a quote that doesn't exist - message check", (done) => {
         request(server)
           .delete("/api/orders/sporderid/doesntExist")
-          .then(response => {
+          .then((response) => {
             const expectedBody = {
-              message: "Could not find that Scalable press order ID"
+              message: "Could not find that Scalable press order ID",
             };
             expect(response.body).toEqual(expectedBody);
 

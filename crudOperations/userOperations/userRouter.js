@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
     const users = await Models.Users.find();
     res.status(200).json(users);
   } catch (error) {
-    console.log('GET ALL USERS ERROR', error)
+    console.log("GET ALL USERS ERROR", error);
     res
       .status(500)
       .json({ error, message: "Unable to get users, its not you.. its me" });
@@ -31,10 +31,10 @@ router.get("/:id", async (req, res) => {
       res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
-    console.log('GET USER BY ID ERROR', error)
+    console.log("GET USER BY ID ERROR", error);
     res.status(500).json({
       error,
-      message: "Unable to find this user id, its not you.. its me"
+      message: "Unable to find this user id, its not you.. its me",
     });
   }
 });
@@ -52,10 +52,10 @@ router.get("/username/:username", async (req, res) => {
       res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
-    console.log('GET USERNAME ERROR', error)
+    console.log("GET USERNAME ERROR", error);
     res.status(500).json({
       error,
-      message: "Unable to find this user, its not you.. its me"
+      message: "Unable to find this user, its not you.. its me",
     });
   }
 });
@@ -75,10 +75,10 @@ router.get("/email/:email", async (req, res) => {
         .json({ message: "That user could not be found by email!" });
     }
   } catch (error) {
-    console.log('GET EMAIL ERROR', error)
+    console.log("GET EMAIL ERROR", error);
     res.status(500).json({
       error,
-      message: "Unable to find this user, its not you.. its me"
+      message: "Unable to find this user, its not you.. its me",
     });
   }
 });
@@ -90,15 +90,13 @@ router.get("/domain/:domain", async (req, res) => {
     if (user) {
       res.status(200).json(user);
     } else {
-      res
-        .status(404)
-        .json({ message: "That user could not be found!" });
+      res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
-    console.log('GET EMAIL ERROR', error)
+    console.log("GET EMAIL ERROR", error);
     res.status(500).json({
       error,
-      message: "Unable to find this user, its not you.. its me"
+      message: "Unable to find this user, its not you.. its me",
     });
   }
 });
@@ -108,20 +106,17 @@ router.get("/domain/:domain", async (req, res) => {
 // @access   Private
 router.put("/:id", async (req, res) => {
   try {
-    const user = await Models.Users.updateById(
-      req.params.id,
-      req.body
-    );
+    const user = await Models.Users.updateById(req.params.id, req.body);
     if (user) {
       res.status(200).json({ user, message: "Info updated!" });
     } else {
       res.status(404).json({ message: "That user could not be found!" });
     }
   } catch (error) {
-    console.log('UPDATE USER ERROR', error)
+    console.log("UPDATE USER ERROR", error);
     res.status(500).json({
       error,
-      message: "Could not edit this user, its not you.. its me"
+      message: "Could not edit this user, its not you.. its me",
     });
   }
 });
@@ -138,10 +133,10 @@ router.delete("/:username", async (req, res) => {
       res.status(404).json({ message: "User unable to be deleted!" });
     }
   } catch (error) {
-    console.log('DELETE USER ERROR', error)
+    console.log("DELETE USER ERROR", error);
     res.status(500).json({
       error,
-      message: "Error while deleting User, its not you.. its me"
+      message: "Error while deleting User, its not you.. its me",
     });
   }
 });

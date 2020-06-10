@@ -1,14 +1,11 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("users", users => {
+exports.up = function (knex) {
+  return knex.schema.createTable("users", (users) => {
     users.increments("id").primary();
     users.string("first_name", 255);
     users.string("last_name", 255);
     users.string("username", 255).unique();
     users.string("password", 255).notNullable();
-    users
-      .boolean("seller")
-      .defaultTo(false)
-      .notNullable();
+    users.boolean("seller").defaultTo(false).notNullable();
     users.string("stripe_account", 255);
     users.string("address1", 255);
     users.string("address2", 255).defaultTo("-");
@@ -33,6 +30,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists("users");
 };

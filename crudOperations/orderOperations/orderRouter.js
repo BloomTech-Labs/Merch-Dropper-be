@@ -25,14 +25,14 @@ router.post("/", async (req, res) => {
           orderToken: spResponse.orderToken,
           spOrderID: spResponse.orderId,
           mode: spResponse.mode,
-          orderedAt: spResponse.orderedAt
+          orderedAt: spResponse.orderedAt,
         };
         Models.Orders.insert(order);
         res.status(201).json({
           message:
             "You have successfully added this Quote to our DB, spResponse is from SP!",
           order,
-          spResponse
+          spResponse,
         });
       }
     }
@@ -41,10 +41,10 @@ router.post("/", async (req, res) => {
     //   res.status(400).json({ message: "please include all required content" });
     // }
   } catch (error) {
-    console.log('ORDER POST ERROR', error)
+    console.log("ORDER POST ERROR", error);
     res.status(500).json({
       error,
-      message: "Unable to add this quote, its not you.. its me"
+      message: "Unable to add this quote, its not you.. its me",
     });
   }
 });
@@ -57,7 +57,7 @@ router.get("/", async (req, res) => {
     const orders = await Models.Orders.find();
     res.status(200).json(orders);
   } catch (error) {
-    console.log('GET ALL ORDERS', error)
+    console.log("GET ALL ORDERS", error);
     res
       .status(500)
       .json({ error, message: "Unable to get orders, its not you.. its me" });
@@ -78,10 +78,10 @@ router.get("/:id", async (req, res) => {
         .json({ message: "Unable to find this order, double check the id" });
     }
   } catch (error) {
-    console.log('GET ORDER BY ID', error)
+    console.log("GET ORDER BY ID", error);
     res.status(500).json({
       error,
-      message: "Unable to find this order id, its not you.. its me"
+      message: "Unable to find this order id, its not you.. its me",
     });
   }
 });
@@ -100,10 +100,10 @@ router.get("/sporderid/:spOrderID", async (req, res) => {
         .json({ message: "Unable to find this order, double check the id" });
     }
   } catch (error) {
-    console.log('GET SCALABLE PRESS ORDER ERROR', error)
+    console.log("GET SCALABLE PRESS ORDER ERROR", error);
     res.status(500).json({
       error,
-      message: "Unable to find this order id, its not you.. its me"
+      message: "Unable to find this order id, its not you.. its me",
     });
   }
 });
@@ -122,10 +122,10 @@ router.get("/ordertoken/:orderToken", async (req, res) => {
         .json({ message: "Unable to find this order, double check the id" });
     }
   } catch (error) {
-    console.log('GET ORDERTOKEN ERROR', error)
+    console.log("GET ORDERTOKEN ERROR", error);
     res.status(500).json({
       error,
-      message: "Unable to find this order id, its not you.. its me"
+      message: "Unable to find this order id, its not you.. its me",
     });
   }
 });
@@ -143,10 +143,10 @@ router.put("/:id", async (req, res) => {
       res.status(404).json({ message: "That order could not be found!" });
     }
   } catch (error) {
-    console.log('UPDATE ORDER ERROR', error)
+    console.log("UPDATE ORDER ERROR", error);
     res.status(500).json({
       error,
-      message: "Could not edit this order, its not you.. its me"
+      message: "Could not edit this order, its not you.. its me",
     });
   }
 });
@@ -166,10 +166,10 @@ router.put("/ordertoken/:orderToken", async (req, res) => {
       res.status(404).json({ message: "That order could not be found!" });
     }
   } catch (error) {
-    console.log('UPDATE ORDERTOKEN ERROR', error)
+    console.log("UPDATE ORDERTOKEN ERROR", error);
     res.status(500).json({
       error,
-      message: "Could not edit this order, its not you.. its me"
+      message: "Could not edit this order, its not you.. its me",
     });
   }
 });
@@ -189,10 +189,10 @@ router.put("/sporderid/:spOrderID", async (req, res) => {
       res.status(404).json({ message: "That order could not be found!" });
     }
   } catch (error) {
-    console.log('UPDATE SCALABLE PRESS ORDER ERROR',error)
+    console.log("UPDATE SCALABLE PRESS ORDER ERROR", error);
     res.status(500).json({
       error,
-      message: "Could not edit this order, its not you.. its me"
+      message: "Could not edit this order, its not you.. its me",
     });
   }
 });
@@ -209,10 +209,10 @@ router.delete("/:id", async (req, res) => {
       res.status(404).json({ message: "Could not find that order ID" });
     }
   } catch (error) {
-    console.log('DELETE ORDER ERROR', error)
+    console.log("DELETE ORDER ERROR", error);
     res.status(500).json({
       error,
-      message: "Error while deleting Order, its not you.. its me"
+      message: "Error while deleting Order, its not you.. its me",
     });
   }
 });
@@ -229,10 +229,10 @@ router.delete("/ordertoken/:orderToken", async (req, res) => {
       res.status(404).json({ message: "Could not find that order token" });
     }
   } catch (error) {
-    console.log('DELETE ORDER TOKEN ERROR', error)
+    console.log("DELETE ORDER TOKEN ERROR", error);
     res.status(500).json({
       error,
-      message: "Error while deleting Order, its not you.. its me"
+      message: "Error while deleting Order, its not you.. its me",
     });
   }
 });
@@ -251,10 +251,10 @@ router.delete("/sporderid/:spOrderID", async (req, res) => {
         .json({ message: "Could not find that Scalable press order ID" });
     }
   } catch (error) {
-    console.log('DELETE SCALABLE PRESS ORDER ERROR', error)
+    console.log("DELETE SCALABLE PRESS ORDER ERROR", error);
     res.status(500).json({
       error,
-      message: "Error while deleting Order, its not you.. its me"
+      message: "Error while deleting Order, its not you.. its me",
     });
   }
 });

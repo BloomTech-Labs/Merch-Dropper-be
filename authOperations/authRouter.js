@@ -17,10 +17,10 @@ router.post("/register", async (req, res) => {
 
     res.status(201).json(addedUser);
   } catch (error) {
-    console.log('AUTH REGISTER ERROR',error)
+    console.log("AUTH REGISTER ERROR", error);
     res.status(500).json({
       error,
-      message: "Username Must be Unique, please choose another"
+      message: "Username Must be Unique, please choose another",
     });
   }
 });
@@ -31,19 +31,19 @@ router.post("/login", (req, res) => {
 
   Models.Users.findByEmail(email)
     .first()
-    .then(user => {
+    .then((user) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
         res.status(200).json({
           message: `Welcome ${user.username}!`,
-          token
+          token,
         });
       } else {
         res.status(401).json({ message: "Invalid credentials" });
       }
     })
-    .catch(error => {
-      console.log('AUTH LOGIN ERROR', error);
+    .catch((error) => {
+      console.log("AUTH LOGIN ERROR", error);
       res
         .status(500)
         .json({ error, message: "There was an error logging you in" });
@@ -53,11 +53,11 @@ router.post("/login", (req, res) => {
 function generateToken(user) {
   const payload = {
     subject: user.userID,
-    username: user.username
+    username: user.username,
   };
 
   const options = {
-    expiresIn: "7d"
+    expiresIn: "7d",
   };
 
   return jwt.sign(payload, process.env.JWT_SECRET, options);

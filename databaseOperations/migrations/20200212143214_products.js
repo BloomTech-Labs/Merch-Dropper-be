@@ -1,5 +1,5 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("products", products => {
+exports.up = function (knex) {
+  return knex.schema.createTable("products", (products) => {
     products.increments("id").primary();
     products.string("productName", 255).notNullable();
     products.string("fullSizeURL", 500).notNullable();
@@ -7,11 +7,11 @@ exports.up = function(knex) {
     products.string("description", 500).defaultTo("None");
     products.string("product_id", 500).notNullable();
     products.decimal("price").defaultTo(0);
-    products.string('designId').notNullable();
-    products.string('color').notNullable();
-    products.string('size').notNullable();
-    products.string('type').notNullable();
-    products.string('product_id').notNullable()
+    products.string("designId").notNullable();
+    products.string("color").notNullable();
+    products.string("size").notNullable();
+    products.string("type").notNullable();
+    products.string("product_id").notNullable();
     products
       .integer("storeID")
       .notNullable()
@@ -23,6 +23,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists("products");
 };

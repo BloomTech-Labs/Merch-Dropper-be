@@ -1,15 +1,9 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("stores", stores => {
+exports.up = function (knex) {
+  return knex.schema.createTable("stores", (stores) => {
     stores.increments("id").primary();
     stores.boolean("active").defaultTo(true);
-    stores
-      .string("store_name", 255)
-      .unique()
-      .notNullable();
-    stores
-      .string("domain_name", 255)
-      .unique()
-      .notNullable();
+    stores.string("store_name", 255).unique().notNullable();
+    stores.string("domain_name", 255).unique().notNullable();
     stores
       .string("hero_ImageURL", 255)
       .defaultTo(
@@ -31,6 +25,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists("stores");
 };

@@ -1,5 +1,5 @@
-exports.up = function(knex) {
-  return knex.schema.createTable("orders", orders => {
+exports.up = function (knex) {
+  return knex.schema.createTable("orders", (orders) => {
     orders.increments("id").primary();
     orders.string("status", 255).notNullable();
     orders.decimal("total", null).notNullable();
@@ -7,10 +7,7 @@ exports.up = function(knex) {
     orders.decimal("tax", null).notNullable();
     orders.decimal("fees", null).notNullable();
     orders.decimal("shipping", null).notNullable();
-    orders
-      .string("orderToken", 255)
-      .unique()
-      .notNullable();
+    orders.string("orderToken", 255).unique().notNullable();
     orders.string("spOrderID", 255).notNullable();
     orders.string("mode", 255).notNullable();
     orders.string("orderedAt", 255).notNullable();
@@ -32,6 +29,6 @@ exports.up = function(knex) {
   });
 };
 
-exports.down = function(knex) {
+exports.down = function (knex) {
   return knex.schema.dropTableIfExists("orders");
 };

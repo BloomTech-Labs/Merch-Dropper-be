@@ -11,12 +11,11 @@ const PORT = process.env.PORT || 4000;
 const app = server.listen(
   PORT,
   console.log(
-    `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`
-      .bold
+    `Server is running in ${process.env.NODE_ENV} mode on port ${PORT}`.bold
   )
 );
 
-// this code is to handle any promises that are rejected but don't have a .catch() to handle the resulting error 
-process.on("unhandledRejection", function(reason, promise) {
+// this code is to handle any promises that are rejected but don't have a .catch() to handle the resulting error
+process.on("unhandledRejection", function (reason, promise) {
   console.error("Unhandled rejection", { reason: reason, promise: promise });
 });

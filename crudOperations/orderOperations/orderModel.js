@@ -1,7 +1,7 @@
 const axios = require("axios");
 
 module.exports = {
-  orderMaker
+  orderMaker,
 };
 
 async function orderMaker(data) {
@@ -9,8 +9,8 @@ async function orderMaker(data) {
     headers: {
       "Content-Type": "application/json",
       // "Content-Type": "text/plain",
-      Authorization: `Basic ${process.env.TEST}` //this our TEST api key - it has to be a env variable moving forward === TEST
-    }
+      Authorization: `Basic ${process.env.TEST}`, //this our TEST api key - it has to be a env variable moving forward === TEST
+    },
   };
   if (data) {
     const order = await axios.post(
