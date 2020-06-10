@@ -83,6 +83,26 @@ router.get("/email/:email", async (req, res) => {
   }
 });
 
+router.get("/domain/:domain", async (req, res) => {
+  // console.log(req.params);
+  try {
+    const user = await Models.findUserByDomain(req.params.domain);
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res
+        .status(404)
+        .json({ message: "That user could not be found!" });
+    }
+  } catch (error) {
+    console.log('GET EMAIL ERROR', error)
+    res.status(500).json({
+      error,
+      message: "Unable to find this user, its not you.. its me"
+    });
+  }
+});
+
 // @desc     Edit a User by id
 // @route    PUT /api/users/:username
 // @access   Private

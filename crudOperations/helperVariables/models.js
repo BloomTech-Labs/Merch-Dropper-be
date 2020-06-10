@@ -80,6 +80,7 @@ class Model {
       .select("*")
       .first();
   }
+
   //for finding entry associated with id passed
   // findById(tableName, id) {
   //   return db(tableName)
@@ -192,4 +193,8 @@ async function addEntry(tableName, entry, returnTables) {
   return addedItem;
 }
 
-module.exports = { Users, Stores, Designs, Quotes, Orders, Products, addEntry };
+function findUserByDomain(domain_name) {
+  return db("stores").select(`users.*`).join('users', 'users.id', '=', 'stores.userID').where({domain_name}).first()
+}
+
+module.exports = { Users, Stores, Designs, Quotes, Orders, Products, findUserByDomain, addEntry };
