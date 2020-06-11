@@ -88,9 +88,10 @@ router.post('/price', async (req, res) => {
       Authorization: `Basic ${process.env.TEST}`
     }
   }
-  const productId = req.body.productId;
+  const quoteOnly = req.body;
   // console.log(productId)
-  axios.get(`https://api.scalablepress.com/v2/products/${productId}/items`,
+  axios.post(`https://api.scalablepress.com/v2/quote`,
+  quoteOnly,
   config)
   .then(response => {
     res.json(response.data)
