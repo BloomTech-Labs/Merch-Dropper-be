@@ -84,21 +84,23 @@ router.post("/price", async (req, res) => {
   let config = await {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Basic ${process.env.TEST}`,
-    },
-  };
-  const productId = req.body.productId;
+      Authorization: `Basic ${process.env.TEST}`
+    }
+  }
+  const quoteOnly = req.body;
   // console.log(productId)
-  axios
-    .get(`https://api.scalablepress.com/v2/products/${productId}/items`, config)
-    .then((response) => {
-      res.json(response.data);
-    })
-    .catch((err) => {
-      console.log("PRICE POST ERROR", err);
-      res.json(err);
-    });
-});
+  axios.post(`https://api.scalablepress.com/v2/quote`,
+  quoteOnly,
+  config)
+  .then(response => {
+    res.json(response.data)
+  })
+  .catch(err => {
+    console.log('PRICE POST ERROR', err)
+    res.json(err)
+  })
+})
+
 
 // @desc     Get all Products
 // @route    GET /api/products
