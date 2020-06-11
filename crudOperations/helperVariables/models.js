@@ -87,6 +87,12 @@ class Model {
       });
   }
 
+  updateByUserId(userID, changes) {
+    return db(this.tableName)
+      .where({userID})
+      .update(changes)
+  }
+
   updateByUsername(username, changes) {
     return db(this.tableName)
       .where("username", username)
