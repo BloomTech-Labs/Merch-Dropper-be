@@ -32,7 +32,7 @@ server.use(
       tokens.res(req, res, "content-length"),
       "-",
       tokens["response-time"](req, res),
-      "ms"
+      "ms",
     ].join(" ");
   })
 );
@@ -53,7 +53,6 @@ server.use(function(req, res, next) {
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
     next();
  });*/
-
 
 //server.use((req, res, next) => {    res.header('Access-Control-Allow-Origin', '*');    next();   });
 
