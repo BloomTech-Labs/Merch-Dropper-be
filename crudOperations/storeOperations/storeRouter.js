@@ -201,19 +201,19 @@ router.put("/:id", async (req, res) => {
   }
 });
 
-router.put("/activate/:id", async (req, res) => {
-  const { id } = req.params;
+router.put("/activate/:userID", async (req, res) => {
+  const { userID } = req.params;
   try {
-    const store = await Models.Stores.updateById(id, {active: true});
+    const store = await Models.Stores.updateByUserId(userID, {active: true});
     if (store) {
-      res.status(200).json({ store, message: "Store Active" });
+      res.status(200).json({ message: "Your store is now active!" });
     } else {
       res.status(404).json({ message: "That store could not be found!" });
     }
   } catch (error) {
     console.log("STORE UPDATE ERROR", error);
     res.status(500).json({
-      error,
+      error: error.message,
       message: "Could not edit this store, its not you.. its me",
     });
   }
