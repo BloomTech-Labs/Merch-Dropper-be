@@ -60,7 +60,7 @@ function generateToken(user) {
     expiresIn: "7d",
   };
 
-  return jwt.sign(payload, process.env.JWT_SECRET, options);
+  return jwt.sign(payload, process.env.JWT_SECRET || "secret", options);
 }
 
 module.exports = router;
