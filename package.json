@@ -9,7 +9,8 @@
     "start": "node index.js",
     "server": "nodemon index.js",
     "test": "cross-env DB_ENV=testing jest --detectOpenHandles --forceExit ",
-    "coverage": "cross-env DB_ENV=testing jest --coverage --detectOpenHandles --forceExit || true"
+    "coverage": "cross-env DB_ENV=testing jest --coverage --detectOpenHandles --forceExit || true",
+    "pretty": "prettier --write \"./**/*.{js,jsx,json}\""
   },
   "jest": {
     "testEnvironment": "node",

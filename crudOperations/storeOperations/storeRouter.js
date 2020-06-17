@@ -204,7 +204,7 @@ router.put("/:id", async (req, res) => {
 router.put("/activate/:userID", async (req, res) => {
   const { userID } = req.params;
   try {
-    const store = await Models.Stores.updateByUserId(userID, {active: true});
+    const store = await Models.Stores.updateByUserId(userID, { active: true });
     if (store) {
       res.status(200).json({ message: "Your store is now active!" });
     } else {

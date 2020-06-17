@@ -47,12 +47,10 @@ router.post("/accounts", async (req, res) => {
     console.log(updatedUser);
     res.status(201).json({ message: "Account Number Aqcuired!", response });
   } catch (err) {
-    res
-      .status(500)
-      .json({
-        error: "There was an issue connecting your stripe account",
-        response,
-      });
+    res.status(500).json({
+      error: "There was an issue connecting your stripe account",
+      response,
+    });
   }
 });
 
