@@ -17,10 +17,8 @@ router.post("/accounts", async (req, res) => {
 
     let user = await Models.Users.findByEmail(email)
     user.stripe_account = response.stripe_user_id;
-    console.log(user)
     
     const updatedUser = await Models.Users.updateByUsername(user.username, user);
-    console.log(updatedUser)
     
     if(response){
         res.status(201).json({ message: "Account Number Aqcuired!", response });
@@ -38,13 +36,11 @@ router.post("/accounts", async (req, res) => {
     });
     let user = await Models.Users.findByEmail(email);
     user.stripe_account = response.stripe_user_id;
-    console.log(user);
 
     const updatedUser = await Models.Users.updateByUsername(
       user.username,
       user
     );
-    console.log(updatedUser);
     res.status(201).json({ message: "Account Number Aqcuired!", response });
   } catch (err) {
     res.status(500).json({
@@ -57,7 +53,6 @@ router.post("/accounts", async (req, res) => {
 router.get("/accounts", async (req, res) => {
   try {
     const user = await Models.Users.find();
-    console.log(user);
     if (user) {
       res.status(201).json({ user });
     }
@@ -72,10 +67,8 @@ router.get("/accounts", async (req, res) => {
 router.get("/:email", async (req, res) => {
   const { email } = req.params;
 
-  console.log(email);
   try {
     const user = await Models.Users.findByEmail(email);
-    console.log(user);
     if (user) {
       res.status(201).json({ user });
     }
