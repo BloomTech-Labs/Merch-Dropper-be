@@ -43,6 +43,7 @@ router.get("/:id", async (req, res) => {
 // @route    GET /api/users/username/:username
 // @access   Private
 router.get("/username/:username", async (req, res) => {
+  // console.log(req.params);
   try {
     const user = await Models.Users.findByUsername(req.params.username);
     if (user) {
@@ -63,6 +64,7 @@ router.get("/username/:username", async (req, res) => {
 // @route    GET /api/users/username/:email
 // @access   Private
 router.get("/email/:email", async (req, res) => {
+  // console.log(req.params);
   try {
     const user = await Models.Users.findByEmail(req.params.email);
     if (user) {
@@ -82,6 +84,7 @@ router.get("/email/:email", async (req, res) => {
 });
 
 router.get("/domain/:domain", async (req, res) => {
+  // console.log(req.params);
   try {
     const user = await Models.findUserByDomain(req.params.domain);
     if (user) {

@@ -1,4 +1,4 @@
-exports.seed = function (knex) {
+exports.seed = function(knex) {
   return knex("quotes").insert([
     {
       total: 34.76,
@@ -8,7 +8,7 @@ exports.seed = function (knex) {
       shipping: 4.64,
       orderToken: "70192HJALKANOIAMNL",
       storeID: 1,
-      userID: 1,
+      userID: 1
     },
     {
       total: 34.76,
@@ -18,7 +18,7 @@ exports.seed = function (knex) {
       shipping: 4.64,
       orderToken: "TESTTOKEN",
       storeID: 1,
-      userID: 1,
-    },
+      userID: 1
+    }
   ]);
 };

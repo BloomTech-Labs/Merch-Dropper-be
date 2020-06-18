@@ -11,6 +11,7 @@ module.exports = {
 //     .insert({ store_name, username, admin: true })
 
 //     .then(res => {
+//       console.log(res);
 //     })
 //     .catch(error => {
 //       res.status(500).json({
