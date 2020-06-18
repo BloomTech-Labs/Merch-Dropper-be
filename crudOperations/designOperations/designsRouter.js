@@ -9,6 +9,7 @@ const Models = require("../helperVariables/models");
 router.post("/", async (req, res) => {
   try {
     let design = req.body;
+    console.log("the design body", design);
     let returnTables = [
       "id",
       "design_name",

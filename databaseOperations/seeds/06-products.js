@@ -1,4 +1,4 @@
-exports.seed = function (knex) {
+exports.seed = function(knex) {
   return knex("products").insert([
     {
       productName: "Test Product - Store One",
@@ -14,7 +14,7 @@ exports.seed = function (knex) {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare arcu vulputate arcu suscipit venenatis. Donec sit amet ipsum ac urna dignissim euismod a euismod nisi. Nullam pulvinar odio semper.",
       price: 10.3,
-      storeID: 1,
+      storeID: 1
     },
     {
       productName: "Test Product - Store 2",
@@ -30,7 +30,7 @@ exports.seed = function (knex) {
       description:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. In ornare arcu vulputate arcu suscipit venenatis. Donec sit amet ipsum ac urna dignissim euismod a euismod nisi. Nullam pulvinar odio semper.",
       price: 22.3,
-      storeID: 2,
-    },
+      storeID: 2
+    }
   ]);
 };

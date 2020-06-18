@@ -27,12 +27,15 @@ router.post("/", async (req, res) => {
   };
 
   let sellerAcct;
+  // console.log(domain_name, 'DOMAIN NAME OF REQUEST')
   // find the store
   Models.Stores.findByDomainName(domain_name).then((store) => {
+    // console.log('store runs', store)
     const storeID = store.id;
     const { userID } = store;
     // find the user
     Models.Users.findById(userID).then(async (seller) => {
+      // console.log('seller runs', seller)
       const { stripe_account } = seller;
       const acctStripe =
         stripe_account || process.env.CONNECTED_STRIPE_ACCOUNT_ID_TEST;
@@ -41,9 +44,11 @@ router.post("/", async (req, res) => {
         let data = {
           orderToken: orderToken,
         };
+        // console.log('data in the seller try', data)
         if (data) {
           // send order token to SP
           const spResponse = await Orders.orderMaker(data);
+          // console.log('SP RESPONSE', spResponse)
           if (spResponse) {
             let order = {
               userID: seller.id,
@@ -66,6 +71,7 @@ router.post("/", async (req, res) => {
               order.fees,
               order.shipping,
             ];
+            // console.log('ORDER DATA', order)
             Models.Orders.insert(order);
             calculateOrder(items); // run to assign all costs to application_fee
             // Removed the res.json from here it was throwing an error
