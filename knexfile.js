@@ -1,10 +1,7 @@
 module.exports = {
   development: {
-    client: "sqlite3",
-    useNullAsDefault: true,
-    connection: {
-      filename: "./databaseOperations/database.db3",
-    },
+    client: "pg",
+    connection: { host : '127.0.0.1', database: 'merch-dropper', user: 'postgres', password: '244352' },
     pool: {
       min: 2,
       max: 10,
