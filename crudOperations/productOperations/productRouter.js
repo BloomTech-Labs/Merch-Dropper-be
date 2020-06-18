@@ -11,7 +11,6 @@ const axios = require("axios");
 router.post("/", async (req, res) => {
   try {
     let product = req.body;
-    // console.log(product, "product")
     let returnTables = [
       "id",
       "product_id",
@@ -53,7 +52,6 @@ router.post("/", async (req, res) => {
 router.post("/mockup", async (req, res) => {
   try {
     let data = req.body;
-    // console.log('the data in mockup', data)
 
     if (data) {
       const URL = await Products.ShirtMaker(data);
@@ -84,23 +82,20 @@ router.post("/price", async (req, res) => {
   let config = await {
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Basic ${process.env.TEST}`
-    }
-  }
+      Authorization: `Basic ${process.env.TEST}`,
+    },
+  };
   const quoteOnly = req.body;
-  // console.log(productId)
-  axios.post(`https://api.scalablepress.com/v2/quote`,
-  quoteOnly,
-  config)
-  .then(response => {
-    res.json(response.data)
-  })
-  .catch(err => {
-    console.log('PRICE POST ERROR', err)
-    res.json(err)
-  })
-})
-
+  axios
+    .post(`https://api.scalablepress.com/v2/quote`, quoteOnly, config)
+    .then((response) => {
+      res.json(response.data);
+    })
+    .catch((err) => {
+      console.log("PRICE POST ERROR", err);
+      res.json(err);
+    });
+});
 
 // @desc     Get all Products
 // @route    GET /api/products
@@ -168,7 +163,6 @@ router.put("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const product = await Models.Products.updateById(id, req.body);
-    // console.log(product);
     if (product) {
       res
         .status(200)

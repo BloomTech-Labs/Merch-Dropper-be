@@ -1,4 +1,4 @@
-exports.seed = function(knex) {
+exports.seed = function (knex) {
   return knex("users").insert([
     {
       first_name: "Guest",
@@ -14,7 +14,7 @@ exports.seed = function(knex) {
       country: "Merica",
       phone: 1234567890,
       email: "guestemail@gmail.com",
-      support_pin: "12345"
+      support_pin: "12345",
     },
     {
       first_name: "Merch",
@@ -30,7 +30,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 2165274556,
       email: "merchdropper20@gmail.com",
-      support_pin: "HRYI7820"
+      support_pin: "HRYI7820",
     },
     {
       first_name: "Wes",
@@ -46,7 +46,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "wjonke@gmail.com",
-      support_pin: "gunbunny"
+      support_pin: "gunbunny",
     },
     {
       first_name: "Jeris",
@@ -62,7 +62,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "jeris@gmail.com",
-      support_pin: "test"
+      support_pin: "test",
     },
     {
       first_name: "Preston",
@@ -78,7 +78,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "preston@gmail.com",
-      support_pin: "test"
+      support_pin: "test",
     },
     {
       first_name: "Alan",
@@ -94,7 +94,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "alan@gmail.com",
-      support_pin: "test"
+      support_pin: "test",
     },
     {
       first_name: "Daniel",
@@ -110,7 +110,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "daniel@gmail.com",
-      support_pin: "test"
+      support_pin: "test",
     },
     {
       first_name: "Jennie",
@@ -126,7 +126,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "jennie@gmail.com",
-      support_pin: "test"
+      support_pin: "test",
     },
     {
       first_name: "Marcos",
@@ -142,7 +142,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "marcos@gmail.com",
-      support_pin: "test"
+      support_pin: "test",
     },
     {
       first_name: "Tristan",
@@ -158,7 +158,7 @@ exports.seed = function(knex) {
       country: "USA",
       phone: 1234567890,
       email: "tristan@gmail.com",
-      support_pin: "test"
-    }
+      support_pin: "test",
+    },
   ]);
 };

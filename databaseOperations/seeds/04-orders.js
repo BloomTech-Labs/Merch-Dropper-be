@@ -1,4 +1,4 @@
-exports.seed = function(knex) {
+exports.seed = function (knex) {
   return knex("orders").insert([
     {
       status: "pending",
@@ -12,7 +12,7 @@ exports.seed = function(knex) {
       mode: "-",
       orderedAt: "2020-02-17T18:23:38.640Z",
       storeID: 1,
-      userID: 1
+      userID: 1,
     },
     {
       status: "pending",
@@ -26,7 +26,7 @@ exports.seed = function(knex) {
       mode: "-",
       orderedAt: "2020-02-17T18:23:38.640Z",
       storeID: 1,
-      userID: 1
+      userID: 1,
     },
     {
       status: "pending",
@@ -40,7 +40,7 @@ exports.seed = function(knex) {
       mode: "-",
       orderedAt: "2020-02-17T18:23:38.640Z",
       storeID: 1,
-      userID: 1
-    }
+      userID: 1,
+    },
   ]);
 };

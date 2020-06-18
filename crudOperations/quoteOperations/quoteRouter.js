@@ -8,14 +8,10 @@ const Models = require("../helperVariables/models");
 // @route    POST /api/quotes
 // @access   Private
 router.post("/", async (req, res) => {
-  console.log("QUOTE RUNS");
   try {
     let data = req.body;
-    // console.log('quote data', data)
     if (data) {
-      // console.log(data, "data")
       const spResponse = await Quotes.quoteMaker(data.spInfo);
-      // console.log(spResponse, "response SP")
       if (spResponse) {
         let quote = {
           userID: data.quoteInfo.userID, // not relevant until/if there are buyer users
@@ -36,7 +32,6 @@ router.post("/", async (req, res) => {
           quote,
         });
       } else {
-        // console.log(quote)
         console.log("QUOTE OBJECT ATTEMPT", quote);
         res.status(500).json({ msg: "quote did not send" });
       }
@@ -58,7 +53,6 @@ router.post("/", async (req, res) => {
 router.get("/", async (req, res) => {
   try {
     const quotes = await Models.Quotes.find();
-    // console.log(quotes);
     res.status(200).json(quotes);
   } catch (error) {
     console.log("GET QUOTE ERROR", error);
@@ -139,12 +133,10 @@ router.put("/:id", async (req, res) => {
 // @access   Private
 router.put("/ordertokenedit/:orderToken", async (req, res) => {
   try {
-    // console.log(req.params.orderToken);
     const quote = await Models.Quotes.updateByOrderToken(
       req.params.orderToken,
       req.body
     );
-    // console.log(quote);
     if (quote) {
       res.status(200).json({ message: "Quote info has been updated!", quote });
     } else {

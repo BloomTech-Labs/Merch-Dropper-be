@@ -13,13 +13,11 @@ router.post("/", async (req, res) => {
   try {
     let store = req.body;
     const id = req.body.id;
-    // console.log(req.body, "body")
     if (!store.store_name || !store.id) {
       res.status(400).json({ message: "please include all required content" });
     } else {
       Models.Users.findById(id)
         .then((user) => {
-          // console.log(user, "user")
           const storeWithEmail = {
             store_name: store.store_name,
             userID: user.id,
@@ -204,7 +202,7 @@ router.put("/:id", async (req, res) => {
 router.put("/activate/:userID", async (req, res) => {
   const { userID } = req.params;
   try {
-    const store = await Models.Stores.updateByUserId(userID, {active: true});
+    const store = await Models.Stores.updateByUserId(userID, { active: true });
     if (store) {
       res.status(200).json({ message: "Your store is now active!" });
     } else {

@@ -13,7 +13,6 @@ async function quoteMaker(data) {
     },
   };
   if ((data, config)) {
-    // console.log(data, "to SP")
     const quote = await axios.post(
       "https://api.scalablepress.com/v2/quote",
       data,
