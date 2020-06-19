@@ -4,6 +4,8 @@
 
 # API Documentation
 
+Published at [https://documenter.getpostman.com/view/10983809/Szzn6wWF?version=latest] for a more readable version
+
 #### Backend deployed at [Heroku](https://merchdropper-production.herokuapp.com) <br>
 
 ## Getting started
