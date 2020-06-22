@@ -4,6 +4,14 @@
 
 # API Documentation
 
+Published at [https://documenter.getpostman.com/view/10983809/Szzn6wWF?version=latest] for a more readable version
+Steps to get access:
+
+1. Sign-Up/Login to Postman
+2. Navigate to Merch Dropper workspace
+3. Navigate to Collections tab
+4. Click on Merch Dropper to CRUD documentation
+
 #### Backend deployed at [Heroku](https://merchdropper-production.herokuapp.com) <br>
 
 ## Getting started
@@ -437,7 +445,7 @@ Remember that this project is licensed under the MIT license, and by submitting 
 
 These contribution guidelines have been adapted from [this good-Contributing.md-template](https://gist.github.com/PurpleBooth/b24679402957c63ec426).
 
-## Documentation
+## Documentation (Legacy)
 
 1.  See [Frontend Documentation](https://github.com/Lambda-School-Labs/Merch-Dropper-fe/blob/master/README.md) for details on the frontend of our project.
 2.  See [Postman Backend Documentation](https://documenter.getpostman.com/view/9427795/SWTHYuA5?version=latest) for more details on the backend of our project.
